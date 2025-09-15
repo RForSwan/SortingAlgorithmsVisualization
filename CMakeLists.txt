@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.2)
 project(SortingAlgorithmsVisualization C)
 
 set(CMAKE_C_STANDARD 11)
@@ -16,6 +16,8 @@ add_executable(SortingAlgorithmsVisualization
         utils.c
         utils.h
         visual.c
-        visual.h)
+        visual.h
+        visual.c
+        main.c)
 
 target_link_libraries(SortingAlgorithmsVisualization ${SDL2_LIBRARIES})
