@@ -18,6 +18,7 @@ add_executable(SortingAlgorithmsVisualization
         visual.c
         visual.h
         visual.c
-        main.c)
+        main.c
+        logger.c)
 
 target_link_libraries(SortingAlgorithmsVisualization ${SDL2_LIBRARIES})

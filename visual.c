@@ -1,36 +1,5 @@
 #include "settings.h"
 
-SDL_Display* visual_CreateDisplay()
-{
-    SDL_Init(SDL_INIT_VIDEO);
-
-    SDL_Display* display = calloc(1, sizeof(SDL_Display));
-
-    display->window = SDL_CreateWindow("Bubble Sort Visualization", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-    if(!display->window){
-        printf("Error creating SDL Window: %s\n", SDL_GetError());
-        free(display);
-        SDL_Quit();
-        return NULL;
-    }
-    display->renderer = SDL_CreateRenderer(display->window, -1, SDL_RENDERER_ACCELERATED);
-    if(!display->renderer){
-        printf("Error creating SDL Renderer: %s\n", SDL_GetError());
-        SDL_DestroyWindow(display->window);
-        free(display);
-        SDL_Quit();
-        return NULL;
-    }
-    return display;
-}
-
-void visual_DestroyDisplay(SDL_Display* display)
-{
-    SDL_DestroyRenderer(display->renderer);
-    SDL_DestroyWindow(display->window);
-    free(display);
-    SDL_Quit();
-}
 
 void draw_title_screen(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black bg

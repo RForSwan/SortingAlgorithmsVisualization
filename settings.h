@@ -7,13 +7,21 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <assert.h>
+#include <string.h>
+#include <math.h>
+
+/// SDL2
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 /// Headers
 #include "sorting.h"
 #include "stats.h"
 #include "utils.h"
 #include "visual.h"
+#include "app.h"
+#include "logger.h"
 
 
 ///// SETTINGS /////
@@ -27,5 +35,7 @@
 // Play Button
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 80
+
+#define AssertNew(ptr) { if (ptr == NULL) { assert(false); abort(); } }
 
 #endif // _SETTINGS_H_
