@@ -2,6 +2,14 @@
 #define _VISUAL_H_
 
 
+typedef struct {
+    int x, y, w, h;
+    const char *label;
+} Button;
+
+// Menus buttons on the left of the screen
+extern Button buttons[4];
+
 void draw_title_screen(SDL_Renderer *renderer, TTF_Font *font);
 int play_clicked(int x, int y);
 void draw_bars(SDL_Renderer *renderer, int arr[], int n, int i, int j);

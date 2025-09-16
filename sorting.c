@@ -33,6 +33,9 @@ void insertion_sort(SDL_Renderer *renderer, int arr[], int n) {
                     Gizmos = !Gizmos;
                     printf("Gizmos status: %d\n", Gizmos);
                 }
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                    exit(0);
+                }
             }
         }
         SDL_Delay(DELAY_MS);
@@ -65,6 +68,9 @@ void bubble_sort(SDL_Renderer *renderer, int arr[], int n) {
                     if (event.key.keysym.sym == SDLK_g) {
                         Gizmos = !Gizmos;
                         printf("Gizmos status: %d\n", Gizmos);
+                    }
+                    if (event.key.keysym.sym == SDLK_ESCAPE) {
+                        exit(0);
                     }
 
                 }
@@ -104,6 +110,9 @@ void selection_sort(SDL_Renderer *renderer, int arr[], int n) {
                 if (event.key.keysym.sym == SDLK_g) {
                     Gizmos = !Gizmos;
                     printf("Gizmos status: %d\n", Gizmos);
+                }
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                    exit(0);
                 }
             }
         }

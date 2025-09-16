@@ -37,6 +37,7 @@ extern int Gizmos;
 
 // Play Button
 #define BUTTON_WIDTH 200
+#define OPTION_BUTTON_WIDTH 300
 #define BUTTON_HEIGHT 80
 #define MARGIN 0
 

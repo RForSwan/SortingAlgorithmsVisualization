@@ -1,6 +1,11 @@
 #include "settings.h"
 
-
+Button buttons[4] = {
+    {60, 300, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "1"},
+    {60, 350 + (BUTTON_HEIGHT) * 1, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "2"},
+    {60, 400 + (BUTTON_HEIGHT) * 2, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "3"},
+    {60, 450 + (BUTTON_HEIGHT) * 3, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "4"},
+};
 
 void draw_gradient_button(SDL_Renderer *renderer, SDL_Rect button, SDL_Color top, SDL_Color bottom, int radius) {
     for (int y = 0; y < button.h; y++) {
@@ -43,7 +48,27 @@ void draw_button(SDL_Renderer *renderer, SDL_Rect button, const char *label, TTF
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(textTexture);
+
+
+    // SIDE BUTTONS
+    for (int i = 0; i < 4; ++i) {
+        SDL_Rect rect = {buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h};
+        SDL_SetRenderDrawColor(renderer, 70, 130, 180, 255); // Button color
+        SDL_RenderFillRect(renderer, &rect);
+
+        // Draw label (simple version)
+        SDL_Color textColor2 = {255, 255, 255, 255};
+        SDL_Surface* textSurface2 = TTF_RenderText_Solid(font, buttons[i].label, textColor2);
+        SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
+        int tw, th;
+        SDL_QueryTexture(textTexture2, NULL, NULL, &tw, &th);
+        SDL_Rect textRect2 = {rect.x + (rect.w-tw)/2, rect.y + (rect.h-th)/2, tw, th};
+        SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
+        SDL_FreeSurface(textSurface2);
+        SDL_DestroyTexture(textTexture2);
+    }
 }
+
 
 void draw_gradient_background(SDL_Renderer *renderer,
                               SDL_Color top, SDL_Color bottom) {

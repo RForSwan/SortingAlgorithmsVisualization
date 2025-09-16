@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     }
 
     /// Load Font
-    TTF_Font *font = TTF_OpenFont("../Porscha.ttf", 32);
+    TTF_Font *font = TTF_OpenFont("../PixelCaps.ttf", 32);
     if (!font) {
         printf("Failed to load font: %s\n", TTF_GetError());
         // Handle error (exit or fallback)
@@ -48,6 +48,11 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_MOUSEBUTTONDOWN) {
                 int mx = event.button.x;
                 int my = event.button.y;
+                for (int i = 0; i < 4; ++i) {
+                    if (mx >= buttons[i].x && mx <= buttons[i].x + buttons[i].w && my >= buttons[i].y && my <= buttons[i].y + buttons[i].h) {
+                        printf("Button %d clicked!\n", i+1);
+                        }
+                }
                 if (play_clicked(mx, my))
                     started = true;
             }
@@ -64,6 +69,9 @@ int main(int argc, char *argv[]) {
                 if (event.key.keysym.sym == SDLK_g) {
                     Gizmos = !Gizmos;
                     printf("Gizmos status: %d\n", Gizmos);
+                }
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                    exit(0);
                 }
             }
         }
