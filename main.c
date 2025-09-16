@@ -1,5 +1,8 @@
 #include "settings.h"
 
+int DELAY_MS = 5;
+int Gizmos = 0;
+
 #if 0
 int main(int argc, char *argv[]) {
     ///// INITIALIZATION /////
@@ -13,6 +16,15 @@ int main(int argc, char *argv[]) {
         abort();
     }
 
+    TTF_Init();
+    TTF_Font *font = TTF_OpenFont("../Porscha.ttf", 32);
+    if (!font) {
+        printf("Failed to load font: %s\n", TTF_GetError());
+        // Handle error (exit or fallback)
+    }
+    SDL_Display* display = visual_CreateDisplay();
+    if (!display) {
+        return -1;
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer)
     {
@@ -20,16 +32,18 @@ int main(int argc, char *argv[]) {
         assert(false); abort();
     }
 
-
     int* array = utils_createRandomIntArray(N);
+    int* arrayB = utils_createRandomIntArray(N);
+    int* arrayC = utils_createRandomIntArray(N);
+    int* arrayD = utils_createRandomIntArray(N);
 
     bool running = true;
     bool started = false;
     SDL_Event event;
 
-    ///// VISUALIZER LOOP /////
+    // Play Screen
     while (running && !started) {
-        draw_title_screen(renderer);
+        draw_title_screen(display->renderer, font);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 running = false;
@@ -39,16 +53,35 @@ int main(int argc, char *argv[]) {
                 if (play_clicked(mx, my))
                     started = true;
             }
+            if (event.type == SDL_KEYDOWN) {
+                printf("Key pressed: %s\n", SDL_GetKeyName(event.key.keysym.sym));
+                if (event.key.keysym.sym == SDLK_p) {
+                    DELAY_MS += 2;
+                    printf("Delay Increase: %d ms\n", DELAY_MS);
+                }
+                if (event.key.keysym.sym == SDLK_m) {
+                    DELAY_MS -= 2;
+                    printf("Delay Decrease: %d ms\n", DELAY_MS);
+                }
+                if (event.key.keysym.sym == SDLK_g) {
+                    Gizmos = !Gizmos;
+                    printf("Gizmos status: %d\n", Gizmos);
+                }
+            }
         }
         SDL_Delay(10);
     }
 
-    bubble_sort(renderer, array, N);
-    //insertion_sort(renderer, arr, N);
-    //selection_sort(renderer, arr, N);
+    insertion_sort(display->renderer, array, N);
+    bubble_sort(display->renderer, arrayB, N);
+    selection_sort(display->renderer, arrayC, N);
+
 
     // Final display
-    draw_bars(renderer, array, N, -1, -1);
+    //draw_barsA(display->renderer, array, N, -1, -1);
+    //draw_barsB(display->renderer, array, N, -1, -1);
+    //draw_barsC(display->renderer, array, N, -1, -1);
+    //draw_barsD(display->renderer, array, N, -1, -1);
 
     // No automatic quit
     while (running) {
@@ -56,15 +89,15 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT)
                 running = false;
         }
-        SDL_Delay(20);
+        draw_barsA(display->renderer, array, N, -1, -1);
+        draw_barsB(display->renderer, arrayB, N, -1, -1);
+        draw_barsC(display->renderer, arrayC, N, -1, -1);
+        SDL_Delay(DELAY_MS);
     }
 
-    ///// FREE MEMORY /////
-    SDL_DestroyRenderer(renderer);
-    renderer = NULL;
-
-    SDL_DestroyWindow(window);
-    window = NULL;
+    visual_DestroyDisplay(display);
+    TTF_CloseFont(font);
+    TTF_Quit();
 
     return 0;
 }
