@@ -53,6 +53,7 @@ void draw_button(SDL_Renderer *renderer, SDL_Rect button, const char *label, TTF
     // SIDE BUTTONS
     for (int i = 0; i < 4; ++i) {
         SDL_Rect rect = {buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h};
+
         SDL_SetRenderDrawColor(renderer, 70, 130, 180, 255); // Button color
         SDL_RenderFillRect(renderer, &rect);
 
