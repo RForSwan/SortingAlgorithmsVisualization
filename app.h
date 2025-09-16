@@ -2,6 +2,6 @@
 #define _APP_H_
 
 void app_init();
-void app_quit();
+void app_quit(TTF_Font* font);
 
 #endif

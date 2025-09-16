@@ -17,8 +17,12 @@ void app_init(){
         assert(false);
         abort();
     }
+
 }
 
-void app_quit(){
+void app_quit(TTF_Font* font){
+    TTF_CloseFont(font);
+    TTF_Quit();
+    SDL_Quit();
 
 }

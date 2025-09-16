@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.22)
 project(SortingAlgorithmsVisualization C)
 
 set(CMAKE_C_STANDARD 11)
@@ -8,6 +8,8 @@ include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(SortingAlgorithmsVisualization
         main.c
+        app.c
+        app.h
         settings.h
         sorting.c
         sorting.h
@@ -19,6 +21,7 @@ add_executable(SortingAlgorithmsVisualization
         visual.h
         visual.c
         main.c
-        logger.c)
+        logger.c
+        logger.h)
 
 target_link_libraries(SortingAlgorithmsVisualization PRIVATE SDL2 SDL2_ttf SDL2_gfx)

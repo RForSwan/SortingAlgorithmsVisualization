@@ -3,36 +3,34 @@
 int DELAY_MS = 5;
 int Gizmos = 0;
 
-#if 0
+#if 1
 int main(int argc, char *argv[]) {
     ///// INITIALIZATION /////
-
+    app_init();
 
     SDL_Window* window = SDL_CreateWindow("Sorting Algorithms Visualizer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-    if(!window)
-    {
+    if(!window) {
         printf("ERROR - Create window %s\n", SDL_GetError());
         assert(false);
         abort();
     }
 
-    TTF_Init();
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer)
+    {
+        printf("ERROR - Create renderer %s\n", SDL_GetError());
+        assert(false);
+        abort();
+    }
+
+    /// Load Font
     TTF_Font *font = TTF_OpenFont("../Porscha.ttf", 32);
     if (!font) {
         printf("Failed to load font: %s\n", TTF_GetError());
         // Handle error (exit or fallback)
     }
-    SDL_Display* display = visual_CreateDisplay();
-    if (!display) {
-        return -1;
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer)
-    {
-        printf("ERROR - Create renderer %s\n", SDL_GetError());
-        assert(false); abort();
-    }
 
-    int* array = utils_createRandomIntArray(N);
+    int* array  = utils_createRandomIntArray(N);
     int* arrayB = utils_createRandomIntArray(N);
     int* arrayC = utils_createRandomIntArray(N);
     int* arrayD = utils_createRandomIntArray(N);
@@ -43,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     // Play Screen
     while (running && !started) {
-        draw_title_screen(display->renderer, font);
+        draw_title_screen(renderer, font);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 running = false;
@@ -72,9 +70,9 @@ int main(int argc, char *argv[]) {
         SDL_Delay(10);
     }
 
-    insertion_sort(display->renderer, array, N);
-    bubble_sort(display->renderer, arrayB, N);
-    selection_sort(display->renderer, arrayC, N);
+    insertion_sort(renderer, array, N);
+    bubble_sort(renderer, arrayB, N);
+    selection_sort(renderer, arrayC, N);
 
 
     // Final display
@@ -89,20 +87,18 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT)
                 running = false;
         }
-        draw_barsA(display->renderer, array, N, -1, -1);
-        draw_barsB(display->renderer, arrayB, N, -1, -1);
-        draw_barsC(display->renderer, arrayC, N, -1, -1);
+        draw_barsA(renderer, array, N, -1, -1);
+        draw_barsB(renderer, arrayB, N, -1, -1);
+        draw_barsC(renderer, arrayC, N, -1, -1);
         SDL_Delay(DELAY_MS);
     }
 
-    visual_DestroyDisplay(display);
-    TTF_CloseFont(font);
-    TTF_Quit();
+    app_quit(font);
 
     return 0;
 }
 
-#elif 1
+#elif 0
 int main(int argc, char *argv[]) {
 
     Logger* logger = logger_create(LOG_TO_FILE_Y, LOG_TO_STREAM_Y, LOG_LEVEL_VERBOSE);
