@@ -1,30 +1,9 @@
 #ifndef _SETTINGS_H_
 #define _SETTINGS_H_
-#include <pthread.h>
 
 ///// INCLUDES /////
-/// Libraries
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
-#include <assert.h>
-#include <string.h>
-#include <math.h>
 
-/// SDL2
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-
-/// Headers
-#include "sorting.h"
-#include "stats.h"
-#include "utils.h"
-#include "visual.h"
-#include "app.h"
-#include "logger.h"
-
+#include "libraries.h"
 
 ///// SETTINGS /////
 

@@ -1,6 +1,12 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+///// INCLUDES /////
+
+#include "libraries.h"
+
+///// UTILS /////
+
 void   utils_initializer();
 
 int*   utils_createRandomIntArray(int size);

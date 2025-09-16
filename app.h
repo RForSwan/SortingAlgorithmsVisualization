@@ -1,7 +1,11 @@
 #ifndef _APP_H_
 #define _APP_H_
 
-#include "logger.h"
+///// INCLUDES /////
+
+#include "libraries.h"
+
+///// APP /////
 
 typedef struct App_s{
     SDL_Window*   window;

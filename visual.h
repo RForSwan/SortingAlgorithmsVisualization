@@ -1,6 +1,11 @@
 #ifndef _VISUAL_H_
 #define _VISUAL_H_
 
+///// INCLUDES /////
+
+#include "libraries.h"
+
+///// VISUALS /////
 
 typedef struct {
     int x, y, w, h;

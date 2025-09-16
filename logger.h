@@ -1,6 +1,12 @@
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
 
+///// INCLUDES /////
+
+#include "libraries.h"
+
+///// LOGGER /////
+
 #define LOG_FILE "events.log"
 #define BUFFER_SIZE 2048
 

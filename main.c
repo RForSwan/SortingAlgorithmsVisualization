@@ -3,7 +3,7 @@
 int DELAY_MS = 5;
 int Gizmos = 0;
 
-#if 1
+#if 0
 int main(int argc, char *argv[]) {
     ///// INITIALIZATION /////
     App* app = app_init(LOG_LEVEL_VERBOSE);
@@ -73,14 +73,9 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-#elif 0
+#elif 1
 int main(int argc, char *argv[]) {
-
-    Logger* logger = logger_create(LOG_TO_FILE_Y, LOG_TO_STREAM_Y, LOG_LEVEL_VERBOSE);
-    logger_log(logger, LOG_LEVEL_INFO, "Logger %d initialized %s", 1, "successfully");
-    logger_log(logger, LOG_LEVEL_DEBUG, "This is a debug message: %f", 3.14159);
-    logger_log(logger, LOG_LEVEL_ERROR, "This is an error message: %s", "file not found");
-    logger_destroy(logger);
+    
 }
 
 #endif
