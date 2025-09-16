@@ -1,6 +1,8 @@
 #include "settings.h"
 
+
 ///// PRIVATE /////
+
 
 char* get_current_time_string()
 {
@@ -13,6 +15,12 @@ char* get_current_time_string()
 
 ///// PUBLIC /////
 
+
+/// @brief Creates a logger instance
+/// @param to_file Whether to log to file
+/// @param to_stream Whether to log to stream (stdout)
+/// @param log_level Minimum log level to log
+/// @return Logger instance
 Logger* logger_create(bool to_file, bool to_stream, int log_level)
 {
     Logger *log = calloc(1,sizeof(Logger));
@@ -33,6 +41,8 @@ Logger* logger_create(bool to_file, bool to_stream, int log_level)
     return log;
 }
 
+/// @brief Destroys the logger instance
+/// @param log Logger instance
 void logger_destroy(Logger* log)
 {
     if(log->file)
