@@ -108,6 +108,15 @@ void draw_title_screen(SDL_Renderer *renderer, TTF_Font *font) {
     // Draw with over effect
     draw_button(renderer, button, "Play", font, hovered);
 
+    // GIZMOS
+    if (Gizmos) {
+        // Vertical Midlle line
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255); // Yellow
+        SDL_RenderDrawLine(renderer, WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT);
+        // Horizontal Midlle line
+        SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2);
+    }
+
     SDL_RenderPresent(renderer);
 }
 

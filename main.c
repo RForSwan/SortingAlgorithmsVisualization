@@ -38,13 +38,27 @@ int main(int argc, char *argv[]) {
                 if (play_clicked(mx, my))
                     started = true;
             }
+            if (event.type == SDL_KEYDOWN) {
+                printf("Key pressed: %s\n", SDL_GetKeyName(event.key.keysym.sym));
+                if (event.key.keysym.sym == SDLK_p) {
+                    DELAY_MS += 2;
+                    printf("Delay Increase: %d ms\n", DELAY_MS);
+                }
+                if (event.key.keysym.sym == SDLK_m) {
+                    DELAY_MS -= 2;
+                    printf("Delay Decrease: %d ms\n", DELAY_MS);
+                }
+                if (event.key.keysym.sym == SDLK_g) {
+                    Gizmos = !Gizmos;
+                    printf("Gizmos status: %d\n", Gizmos);
+                }
+            }
         }
         SDL_Delay(10);
     }
 
-
-    bubble_sort(display->renderer, array, N);
-    insertion_sort(display->renderer, arrayB, N);
+    insertion_sort(display->renderer, array, N);
+    bubble_sort(display->renderer, arrayB, N);
     selection_sort(display->renderer, arrayC, N);
 
 
