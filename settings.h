@@ -1,5 +1,6 @@
 #ifndef _SETTINGS_H_
 #define _SETTINGS_H_
+#include <pthread.h>
 
 ///// INCLUDES /////
 /// Libraries
@@ -8,6 +9,8 @@
 #include <stdbool.h>
 #include <time.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 
 /// Headers
 #include "sorting.h"
@@ -22,10 +25,12 @@
 #define WINDOW_HEIGHT 1000
 #define N 100
 #define BAR_WIDTH (WINDOW_WIDTH / N)
-#define DELAY_MS 0.01
+extern int DELAY_MS;
+extern int Gizmos;
 
 // Play Button
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 80
+#define MARGIN 0
 
 #endif // _SETTINGS_H_

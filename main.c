@@ -1,15 +1,26 @@
 #include "settings.h"
 
+int DELAY_MS = 5;
+int Gizmos = 0;
 
 int main(int argc, char *argv[]) {
     utils_initializer();
 
+    TTF_Init();
+    TTF_Font *font = TTF_OpenFont("../Porscha.ttf", 32);
+    if (!font) {
+        printf("Failed to load font: %s\n", TTF_GetError());
+        // Handle error (exit or fallback)
+    }
     SDL_Display* display = visual_CreateDisplay();
     if (!display) {
         return -1;
     }
 
     int* array = utils_createRandomIntArray(N);
+    int* arrayB = utils_createRandomIntArray(N);
+    int* arrayC = utils_createRandomIntArray(N);
+    int* arrayD = utils_createRandomIntArray(N);
 
     bool running = true;
     bool started = false;
@@ -17,7 +28,7 @@ int main(int argc, char *argv[]) {
 
     // Play Screen
     while (running && !started) {
-        draw_title_screen(display->renderer);
+        draw_title_screen(display->renderer, font);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 running = false;
@@ -33,14 +44,15 @@ int main(int argc, char *argv[]) {
 
 
     bubble_sort(display->renderer, array, N);
-    //insertion_sort(renderer, arr, N);
-    //selection_sort(renderer, arr, N);
-
-
+    insertion_sort(display->renderer, arrayB, N);
+    selection_sort(display->renderer, arrayC, N);
 
 
     // Final display
-    draw_bars(display->renderer, array, N, -1, -1);
+    //draw_barsA(display->renderer, array, N, -1, -1);
+    //draw_barsB(display->renderer, array, N, -1, -1);
+    //draw_barsC(display->renderer, array, N, -1, -1);
+    //draw_barsD(display->renderer, array, N, -1, -1);
 
     // No automatic quit
     while (running) {
@@ -48,10 +60,15 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT)
                 running = false;
         }
-        SDL_Delay(10);
+        draw_barsA(display->renderer, array, N, -1, -1);
+        draw_barsB(display->renderer, arrayB, N, -1, -1);
+        draw_barsC(display->renderer, arrayC, N, -1, -1);
+        SDL_Delay(DELAY_MS);
     }
 
     visual_DestroyDisplay(display);
+    TTF_CloseFont(font);
+    TTF_Quit();
 
     return 0;
 }
