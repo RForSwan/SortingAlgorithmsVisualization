@@ -75,7 +75,8 @@ int main(int argc, char *argv[]) {
 
 #elif 1
 int main(int argc, char *argv[]) {
-    
+    printf("Hello, World!\n");
+    return 42;
 }
 
 #endif

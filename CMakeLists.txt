@@ -8,9 +8,9 @@ include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(SortingAlgorithmsVisualization
         main.c
+        settings.h
         app.c
         app.h
-        settings.h
         sorting.c
         sorting.h
         stats.c
@@ -19,10 +19,9 @@ add_executable(SortingAlgorithmsVisualization
         utils.h
         visual.c
         visual.h
-        visual.c
-        main.c
         logger.c
         logger.h
+        thread.c
         thread.h)
 
 target_link_libraries(SortingAlgorithmsVisualization PRIVATE SDL2 SDL2_ttf SDL2_gfx)

@@ -1,7 +1,6 @@
 #include "settings.h"
 
 
-
 App* app_init(int LOG_LEVEL){
     /// Utils initialization
     utils_initializer();
@@ -82,6 +81,9 @@ void app_quit(App* app){
 
     SDL_DestroyWindow(app->window);
     app->window = NULL;
+
+    logger_destroy(app->logger);
+    app->logger = NULL;
 
     free(app);
 
