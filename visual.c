@@ -7,6 +7,22 @@ Button buttons[4] = {
     {60, 450 + (BUTTON_HEIGHT) * 3, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "4"},
 };
 
+void hsv_to_rgb(float h, float s, float v, Uint8 *r, Uint8 *g, Uint8 *b) {
+    int i = (int)(h * 6);
+    float f = h * 6 - i;
+    float p = v * (1 - s);
+    float q = v * (1 - f * s);
+    float t = v * (1 - (1 - f) * s);
+    switch(i % 6){
+        case 0: *r = v * 255; *g = t * 255; *b = p * 255; break;
+        case 1: *r = q * 255; *g = v * 255; *b = p * 255; break;
+        case 2: *r = p * 255; *g = v * 255; *b = t * 255; break;
+        case 3: *r = p * 255; *g = q * 255; *b = v * 255; break;
+        case 4: *r = t * 255; *g = p * 255; *b = v * 255; break;
+        case 5: *r = v * 255; *g = p * 255; *b = q * 255; break;
+    }
+}
+
 void draw_gradient_button(SDL_Renderer *renderer, SDL_Rect button, SDL_Color top, SDL_Color bottom, int radius) {
     for (int y = 0; y < button.h; y++) {
         float t = (float)y / (float)(button.h - 1);
@@ -48,13 +64,19 @@ void draw_button(SDL_Renderer *renderer, SDL_Rect button, const char *label, TTF
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(textTexture);
+}
 
 
+void draw_side_buttons(SDL_Renderer *renderer, SDL_Rect button, TTF_Font *font, const int hovered_buttons[]) {
     // SIDE BUTTONS
     for (int i = 0; i < 4; ++i) {
         SDL_Rect rect = {buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h};
 
-        SDL_SetRenderDrawColor(renderer, 70, 130, 180, 255); // Button color
+        if (hovered_buttons[i]) {
+            SDL_SetRenderDrawColor(renderer, 90, 167, 205, 255); // Hover color
+        } else {
+            SDL_SetRenderDrawColor(renderer, 70, 130, 180, 255); // Normal color
+        }
         SDL_RenderFillRect(renderer, &rect);
 
         // Draw label (simple version)
@@ -69,7 +91,6 @@ void draw_button(SDL_Renderer *renderer, SDL_Rect button, const char *label, TTF
         SDL_DestroyTexture(textTexture2);
     }
 }
-
 
 void draw_gradient_background(SDL_Renderer *renderer,
                               SDL_Color top, SDL_Color bottom) {
@@ -99,9 +120,16 @@ void draw_title_screen(SDL_Renderer *renderer, TTF_Font *font) {
     int mx, my;
     SDL_GetMouseState(&mx, &my);
     int hovered = play_clicked(mx, my);
-
+    int hovered_buttons[4] = {0, 0, 0, 0};
+    for (int i = 0; i < 4; ++i) {
+        if (mx >= buttons[i].x && mx <= buttons[i].x + buttons[i].w &&
+            my >= buttons[i].y && my <= buttons[i].y + buttons[i].h) {
+            hovered_buttons[i] = 1;
+        }
+    }
     // Draw with over effect
     draw_button(renderer, button, "Play", font, hovered);
+    draw_side_buttons(renderer, button, font, hovered_buttons);
 
     // GIZMOS
     if (Gizmos) {
@@ -195,17 +223,18 @@ void draw_barsA(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
     // Draw lines
     for (int k = 0; k < n; k++) {
         if (k == i || k == j)
-            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red for compared bars
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black for compared bars
         else {
-            int color_value = (arr[k] * 255) / N;
-            SDL_SetRenderDrawColor(renderer, color_value, color_value, color_value, 255); // Green for others
-
+            float hue = (float)k / n; // 0.0 to 1.0
+            Uint8 r, g, b;
+            hsv_to_rgb(hue, 1.0f, 1.0f, &r, &g, &b);
+            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
         }
 
         // Height proportional to value
         int bar_height = (arr[k] * WINDOW_HEIGHT) / N / 3;
         // Set lines to A position
-        SDL_Rect bar = {k * BAR_WIDTH / 3, WINDOW_HEIGHT / 2 - bar_height, (BAR_WIDTH - 1) / 3, bar_height};
+        SDL_Rect bar = {k * BAR_WIDTH / 3, WINDOW_HEIGHT / 2 - bar_height, (BAR_WIDTH) / 3, bar_height};
         SDL_RenderFillRect(renderer, &bar);
 
         // GIZMOS
@@ -243,17 +272,18 @@ void draw_barsB(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
     // Draw lines
     for (int k = 0; k < n; k++) {
         if (k == i || k == j)
-            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red for compared bars
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black for compared bars
         else {
-            int color_value = (arr[k] * 255) / N;
-            SDL_SetRenderDrawColor(renderer, color_value, color_value, color_value, 255); // Green for others
-
+            float hue = (float)k / n; // 0.0 to 1.0
+            Uint8 r, g, b;
+            hsv_to_rgb(hue, 1.0f, 1.0f, &r, &g, &b);
+            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
         }
 
         // Height proportional to value
         int bar_height = (arr[k] * WINDOW_HEIGHT) / N / 3;
         // Set lines to B position
-        SDL_Rect bar2 = {k * BAR_WIDTH / 3 + WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - bar_height, (BAR_WIDTH - 1) / 3, bar_height};
+        SDL_Rect bar2 = {k * BAR_WIDTH / 3 + WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - bar_height, (BAR_WIDTH) / 3, bar_height};
         SDL_RenderFillRect(renderer, &bar2);
 
         // GIZMOS
@@ -273,17 +303,19 @@ void draw_barsC(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
     // Draw lines
     for (int k = 0; k < n; k++) {
         if (k == i || k == j)
-            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red for compared bars
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black for compared bars
         else {
-            int color_value = (arr[k] * 255) / N;
-            SDL_SetRenderDrawColor(renderer, color_value, color_value, color_value, 255); // Green for others
-
+            float hue = (float)k / n; // 0.0 to 1.0
+            Uint8 r, g, b;
+            hsv_to_rgb(hue, 1.0f, 1.0f, &r, &g, &b);
+            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
         }
+
 
         // Height proportional to value
         int bar_height = (arr[k] * WINDOW_HEIGHT) / N / 3;
         // Set lines to C position
-        SDL_Rect bar3 = {k * BAR_WIDTH / 3, WINDOW_HEIGHT - bar_height, (BAR_WIDTH - 1) / 3, bar_height};
+        SDL_Rect bar3 = {k * BAR_WIDTH / 3, WINDOW_HEIGHT - bar_height, (BAR_WIDTH) / 3, bar_height};
         SDL_RenderFillRect(renderer, &bar3);
 
         // GIZMOS
@@ -302,13 +334,18 @@ void draw_barsD(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
 
     // Draw lines
     for (int k = 0; k < n; k++) {
+        /*
         if (k == i || k == j)
             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red for compared bars
         else {
             int color_value = (arr[k] * 255) / N;
             SDL_SetRenderDrawColor(renderer, color_value, color_value, color_value, 255); // Green for others
-
         }
+        */
+        float hue = (float)k / n; // 0.0 to 1.0
+        Uint8 r, g, b;
+        hsv_to_rgb(hue, 1.0f, 1.0f, &r, &g, &b);
+        SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 
         // Height proportional to value
         int bar_height = (arr[k] * WINDOW_HEIGHT) / N / 3;

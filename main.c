@@ -29,11 +29,11 @@ int main(int argc, char *argv[]) {
             if (app->event.type == SDL_KEYDOWN) {
                 printf("Key pressed: %s\n", SDL_GetKeyName(app->event.key.keysym.sym));
                 if (app->event.key.keysym.sym == SDLK_p) {
-                    DELAY_MS += 2;
+                    DELAY_MS += 1;
                     printf("Delay Increase: %d ms\n", DELAY_MS);
                 }
-                if (app->event.key.keysym.sym == SDLK_m) {
-                    DELAY_MS -= 2;
+                if (app->event.key.keysym.sym == SDLK_m && DELAY_MS > 0.5) {
+                    DELAY_MS -= 1;
                     printf("Delay Decrease: %d ms\n", DELAY_MS);
                 }
                 if (app->event.key.keysym.sym == SDLK_g) {
