@@ -10,6 +10,8 @@ typedef struct {
 // Menus buttons on the left of the screen
 extern Button buttons[4];
 
+
+void draw_timer(SDL_Renderer *renderer, TTF_Font *smallfont);
 void draw_title_screen(SDL_Renderer *renderer, TTF_Font *font);
 int play_clicked(int x, int y);
 void draw_bars(SDL_Renderer *renderer, int arr[], int n, int i, int j);

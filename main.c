@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
     // Play Screen
     while (app->app_running && !app->sort_running) {
         draw_title_screen(app->renderer, app->font);
+        draw_timer(app->renderer, app->smallfont);
         while (SDL_PollEvent(&app->event)) {
             if (app->event.type == SDL_QUIT)
                 app->app_running = false;

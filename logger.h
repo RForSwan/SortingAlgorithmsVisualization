@@ -47,4 +47,6 @@ Logger* logger_create(bool to_file, bool to_stream, int log_level);
 void    logger_destroy(Logger* log);
 int     logger_log(Logger* log, int log_level, const char* message, ...);
 
+extern char* get_current_time_string();
+
 #endif

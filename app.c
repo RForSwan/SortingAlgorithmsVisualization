@@ -48,9 +48,15 @@ App* app_init(int LOG_LEVEL){
     else logger_log(logger, LOG_LEVEL_INFO, "Renderer created successfully");
 
     /// Load Font
-    TTF_Font *font = TTF_OpenFont("../Porscha.ttf", 32);
+    TTF_Font *font = TTF_OpenFont("../PixelCaps.ttf", 32);
+    TTF_Font *smallfont = TTF_OpenFont("../PixelCaps.ttf", 16);
     if (!font) {
         logger_log(logger, LOG_LEVEL_FATAL,"Failed to load font: %s\n", TTF_GetError());
+        assert(false);
+        abort();
+    }
+    if (!smallfont) {
+        logger_log(logger, LOG_LEVEL_FATAL,"Failed to load smallfont: %s\n", TTF_GetError());
         assert(false);
         abort();
     }
@@ -62,6 +68,7 @@ App* app_init(int LOG_LEVEL){
     app->window   = window;
     app->renderer = renderer;
     app->font     = font;
+    app->smallfont= smallfont;
 
     app->app_running  = true;
     app->sort_running = false;

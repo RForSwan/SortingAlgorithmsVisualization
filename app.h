@@ -7,6 +7,7 @@ typedef struct App_s{
     SDL_Window*   window;
     SDL_Renderer* renderer;
     TTF_Font*     font;
+    TTF_Font*     smallfont;
 
     bool app_running;
     bool sort_running;

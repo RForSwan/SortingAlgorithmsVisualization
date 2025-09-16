@@ -107,6 +107,21 @@ void draw_gradient_background(SDL_Renderer *renderer,
     }
 }
 
+void draw_timer(SDL_Renderer *renderer, TTF_Font *smallfont) {
+    // --- Draw date/time at top center ---
+    char* time_str = get_current_time_string();
+    SDL_Color timeColor = {0, 0, 0, 255};
+    SDL_Surface* timeSurface = TTF_RenderText_Blended(smallfont, time_str, timeColor);
+    SDL_Texture* timeTexture = SDL_CreateTextureFromSurface(renderer, timeSurface);
+    int timeW, timeH;
+    SDL_QueryTexture(timeTexture, NULL, NULL, &timeW, &timeH);
+    SDL_Rect timeRect = { (WINDOW_WIDTH - timeW) / 2, 10, timeW, timeH };
+    SDL_RenderCopy(renderer, timeTexture, NULL, &timeRect);
+    SDL_FreeSurface(timeSurface);
+
+    SDL_RenderPresent(renderer);
+}
+
 void draw_title_screen(SDL_Renderer *renderer, TTF_Font *font) {
     SDL_Color top = {116, 171, 226, 255};
     SDL_Color bottom = {85, 99, 222, 255};
