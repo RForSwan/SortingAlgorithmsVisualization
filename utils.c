@@ -34,35 +34,18 @@ void utils_destroyArray(Logger* logger, const unsigned int nb_elements, const si
     logger_log(logger, LOG_LEVEL_INFO, "utils_destroyArray : Array freed successfully");
 }
 
-void* utils_createUniformRandomArray(Logger* logger, const unsigned int nb_elements, const size_t size, void (*random_GenAndAssign_Type)(void*))
-{
-    void* array = calloc(nb_elements, size);
-
-    if(!array)
-    {
-        logger_log(logger, LOG_LEVEL_ERROR, "utils_createUniformRandomArray : Failed allocating memory");
-        return NULL;
-    }
-
-    for(int i = 0; i < nb_elements; i++)
-    {
-        random_GenAndAssign_Type(array + (i * size));
-    }
-
-    return array;
-}
 
 void utils_random_GenAndAssign_int(void* element)
 {
-    *(int*)element = rand() % 100 + 1;
+
 }
 
 void utils_random_GenAndAssign_float(void* element)
 {
-    *(float*)element = (float)(rand() % 100 + 1) / 10.0f;
+
 }
 
-void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, const size_t size, bool isReversed, void (*sorted_GenAndAssign_Type)(void*, void*, bool))
+void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, const size_t size, int SortingType, void (*sorted_GenAndAssign_Type)(void*, void*, int))
 {
     void* array = calloc(nb_elements, size);
 
@@ -72,24 +55,83 @@ void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, co
         return NULL;
     }
 
-    for(int i = 0; i < nb_elements; i++)
+    if(SortingType == SORTED_RANDOM)
     {
-        sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size), isReversed);
+        for(int i = 0; i < nb_elements; i++)
+        {
+            sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size), SortingType);
+        }
     }
+    else if (SortingType == SORTED_INCREASING)
+    {
+        for(int i = 0; i < nb_elements; i++)
+        {
+            sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size), SortingType);
+        }
+    }
+    else if (SortingType == SORTED_DECREASING)
+    {
+        for(int i = 0; i < nb_elements; i++)
+        {
+            sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size), SortingType);
+        }
+    }
+    else if (SortingType == SORTED_PYRAMID)
+    {
+        for(int i = 0; i < nb_elements; i++)
+        {
+            sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size), i< nb_elements/2 ? SORTED_INCREASING : SORTED_DECREASING);
+        }
+    }
+    else if ( SortingType == SORTED_NEARLY)
+    {
+        return NULL;
+    }
+    else
+    {
+        logger_log(logger, LOG_LEVEL_ERROR, "utils_createSortedArray : Unknown SortingType %d", SortingType);
+        free(array);
+        return NULL;
+    }
+
 
     return array;
 }
 
-void utils_sorted_GenAndAssign_int(void* previous, void* element, bool isReversed)
+void utils_sorted_GenAndAssign_int(void* previous, void* element, int SortingType)
 {
-    int Reversed = 10, notReversed = 1;
-    if(previous == NULL) *(int*)element = isReversed ? Reversed : notReversed;
-    else *(int*)element = isReversed ? (*(int*)previous) - 1 : (*(int*)previous) + 1;
+    int min = 0, max = 100, step = 1;
+    if (SortingType == SORTED_RANDOM)
+    {
+        *(int*)element = rand() % max + min + 1;
+    }
+    else if (SortingType == SORTED_INCREASING)
+    {
+        if(previous == NULL) *(int*)element = min;
+        else                 *(int*)element = (*(int*)previous) + step;
+    }
+    else if (SortingType == SORTED_DECREASING)
+    {
+        if(previous == NULL) *(int*)element = max;
+        else                 *(int*)element = (*(int*)previous) - step;
+    }
 }
 
-void utils_sorted_GenAndAssign_float(void* previous, void* element, bool isReversed)
+void utils_sorted_GenAndAssign_float(void* previous, void* element, int SortingType )
 {
-    float Reversed = 10.f, notReversed = 0.f;
-    if(previous == NULL) *(float*)element = isReversed ? Reversed : notReversed;
-    else *(float*)element = isReversed ? (*(float*)previous) - 0.1f :(*(float*)previous) + 0.1f;
+    float min = 0, max = 100, step = 0.1f;
+    if (SortingType == SORTED_RANDOM)
+    {
+        *(float*)element = (float)rand()/(float)(RAND_MAX/max);
+    }
+    else if (SortingType == SORTED_INCREASING)
+    {
+        if(previous == NULL) *(float*)element = min;
+        else                 *(float*)element = (*(int*)previous) + step;
+    }
+    else if (SortingType == SORTED_DECREASING)
+    {
+        if(previous == NULL) *(float*)element = max;
+        else                 *(float*)element = (*(int*)previous) - step;
+    }
 }

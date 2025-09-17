@@ -43,4 +43,6 @@ extern int Gizmos;
 
 #define AssertNew(ptr) { if (ptr == NULL) { assert(false); abort(); } }
 
+
+
 #endif // _SETTINGS_H_
