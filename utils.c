@@ -62,7 +62,7 @@ void utils_random_GenAndAssign_float(void* element)
     *(float*)element = (float)(rand() % 100 + 1) / 10.0f;
 }
 
-void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, const size_t size, void (*sorted_GenAndAssign_Type)(void*, void*))
+void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, const size_t size, bool isReversed, void (*sorted_GenAndAssign_Type)(void*, void*, bool))
 {
     void* array = calloc(nb_elements, size);
 
@@ -74,20 +74,22 @@ void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, co
 
     for(int i = 0; i < nb_elements; i++)
     {
-        sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size));
+        sorted_GenAndAssign_Type(i==0 ? NULL : array + ((i - 1) * size), array + (i * size), isReversed);
     }
 
     return array;
 }
 
-void utils_sorted_GenAndAssign_int(void* previous, void* element)
+void utils_sorted_GenAndAssign_int(void* previous, void* element, bool isReversed)
 {
-    if(previous == NULL) *(int*)element = 1;
-    else *(int*)element = (*(int*)previous) + 1;
+    int Reversed = 10, notReversed = 1;
+    if(previous == NULL) *(int*)element = isReversed ? Reversed : notReversed;
+    else *(int*)element = isReversed ? (*(int*)previous) - 1 : (*(int*)previous) + 1;
 }
 
-void utils_sorted_GenAndAssign_float(void* previous, void* element)
+void utils_sorted_GenAndAssign_float(void* previous, void* element, bool isReversed)
 {
-    if(previous == NULL) *(float*)element = 0.1f;
-    else *(float*)element = (*(float*)previous) + 0.1f;
+    float Reversed = 10.f, notReversed = 0.f;
+    if(previous == NULL) *(float*)element = isReversed ? Reversed : notReversed;
+    else *(float*)element = isReversed ? (*(float*)previous) - 0.1f :(*(float*)previous) + 0.1f;
 }

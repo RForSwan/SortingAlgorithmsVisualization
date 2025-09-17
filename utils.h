@@ -18,9 +18,9 @@ void* utils_createUniformRandomArray(Logger* logger, const unsigned int nb_eleme
 void  utils_random_GenAndAssign_int(void* element);
 void  utils_random_GenAndAssign_float(void* element);
 
-void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, const size_t size, void (*sorted_GenAndAssign_Type)(void*, void*));
+void* utils_createSortedArray(Logger* logger, const unsigned int nb_elements, const size_t size, bool isReversed, void (*sorted_GenAndAssign_Type)(void*, void*, bool));
 
-void  utils_sorted_GenAndAssign_int(void* previous, void* element);
-void  utils_sorted_GenAndAssign_float(void* previous, void* element);
+void  utils_sorted_GenAndAssign_int(void* previous, void* element, bool isReversed);
+void  utils_sorted_GenAndAssign_float(void* previous, void* element, bool isReversed);
 
 #endif

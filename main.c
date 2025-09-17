@@ -89,11 +89,22 @@ int main(int argc, char *argv[]) {
     utils_destroyArray(logger, 10, sizeof(int), array, NULL);
     utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
 
-    array = utils_createSortedArray(logger, 10, sizeof(int), utils_sorted_GenAndAssign_int);
+    array = utils_createSortedArray(logger, 10, sizeof(int), false, utils_sorted_GenAndAssign_int);
     for(int i=0; i<10; i++) printf("%d ", array[i]);
     printf("\n");
 
-    arrayf = utils_createSortedArray(logger, 10, sizeof(float), utils_sorted_GenAndAssign_float);
+    arrayf = utils_createSortedArray(logger, 10, sizeof(float), false, utils_sorted_GenAndAssign_float);
+    for(int i=0; i<10; i++) printf("%f ", arrayf[i]);
+    printf("\n");
+
+    utils_destroyArray(logger, 10, sizeof(int), array, NULL);
+    utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
+
+    array = utils_createSortedArray(logger, 10, sizeof(int), true, utils_sorted_GenAndAssign_int);
+    for(int i=0; i<10; i++) printf("%d ", array[i]);
+    printf("\n");
+
+    arrayf = utils_createSortedArray(logger, 10, sizeof(float), true, utils_sorted_GenAndAssign_float);
     for(int i=0; i<10; i++) printf("%f ", arrayf[i]);
     printf("\n");
 
