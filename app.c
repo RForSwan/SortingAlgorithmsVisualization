@@ -7,6 +7,11 @@ App* app_init(int LOG_LEVEL){
 
     /// Logger initialization
     Logger* logger = logger_create(LOG_TO_FILE_Y, LOG_TO_STREAM_Y, LOG_LEVEL_DEBUG);
+    if(!logger) {
+        printf("Logger initialization failed\n");
+        assert(false);
+        abort();
+    }
     logger_log(logger, LOG_LEVEL_INFO, "Logger initialized successfully");
 
 
@@ -55,6 +60,17 @@ App* app_init(int LOG_LEVEL){
     }
     else logger_log(logger, LOG_LEVEL_INFO, "Font loaded successfully");
 
+    thrd_t* threads = thread_create(logger, NB_THREADS);
+    if(!threads) {
+        logger_log(logger, LOG_LEVEL_FATAL, "Threads initialization failed\n");
+        assert(false);
+        abort();
+    }
+    else logger_log(logger, LOG_LEVEL_INFO, "Threads initialized successfully");
+
+
+    /// Create App
+
     App* app = calloc(1,sizeof(App));
     AssertNew(app);
 
@@ -66,6 +82,9 @@ App* app_init(int LOG_LEVEL){
     app->sort_running = false;
 
     app->logger = logger;
+
+    app->nb_threads = NB_THREADS;
+    app->threads    = threads;
 
     return app;
 

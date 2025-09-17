@@ -75,8 +75,30 @@ int main(int argc, char *argv[]) {
 
 #elif 1
 int main(int argc, char *argv[]) {
-    printf("Hello, World!\n");
-    return 42;
+
+    Logger* logger = logger_create(LOG_TO_FILE_Y, LOG_TO_STREAM_Y, LOG_LEVEL_VERBOSE);
+
+    int* array = utils_createUniformRandomArray(logger, 10, sizeof(int), utils_random_GenAndAssign_int);
+    for(int i=0; i<10; i++) printf("%d ", array[i]);
+    printf("\n");
+
+    float* arrayf = utils_createUniformRandomArray(logger, 10, sizeof(float), utils_random_GenAndAssign_float);
+    for(int i=0; i<10; i++) printf("%f ", arrayf[i]);
+    printf("\n");
+
+    utils_destroyArray(logger, 10, sizeof(int), array, NULL);
+    utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
+
+    array = utils_createSortedArray(logger, 10, sizeof(int), utils_sorted_GenAndAssign_int);
+    for(int i=0; i<10; i++) printf("%d ", array[i]);
+    printf("\n");
+
+    arrayf = utils_createSortedArray(logger, 10, sizeof(float), utils_sorted_GenAndAssign_float);
+    for(int i=0; i<10; i++) printf("%f ", arrayf[i]);
+    printf("\n");
+
+    utils_destroyArray(logger, 10, sizeof(int), array, NULL);
+    utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
 }
 
 #endif

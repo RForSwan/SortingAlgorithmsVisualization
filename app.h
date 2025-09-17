@@ -18,6 +18,9 @@ typedef struct App_s{
     SDL_Event event;
 
     Logger* logger;
+
+    int nb_threads;
+    thrd_t* threads;
 }App;
 
 App* app_init(int LOG_LEVEL);

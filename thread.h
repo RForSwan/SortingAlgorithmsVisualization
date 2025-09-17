@@ -9,7 +9,7 @@
 #define NB_THREADS 4
 
 
-
+thrd_t* thread_create(Logger* logger, int nb_threads);
 
 
 #endif
