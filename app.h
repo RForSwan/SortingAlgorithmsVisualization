@@ -24,6 +24,7 @@ typedef struct App_s{
 }App;
 
 App* app_init(int LOG_LEVEL);
+void app_play(App* app);
 void app_quit(App* app);
 
 #endif

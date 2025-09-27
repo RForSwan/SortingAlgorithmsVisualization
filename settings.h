@@ -16,15 +16,18 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
+#include <SDL2/SDL_thread.h>
 
 /// Headers
+#include "app.h"
+#include "compare.h"
+#include "logger.h"
 #include "sorting.h"
 #include "stats.h"
+#include "thread.h"
 #include "utils.h"
 #include "visual.h"
-#include "app.h"
-#include "logger.h"
-#include "thread.h"
+
 
 ///// SETTINGS /////
 
@@ -42,7 +45,5 @@ extern int Gizmos;
 #define MARGIN 0
 
 #define AssertNew(ptr) { if (ptr == NULL) { assert(false); abort(); } }
-
-
 
 #endif // _SETTINGS_H_

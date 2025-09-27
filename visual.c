@@ -1,5 +1,19 @@
 #include "settings.h"
 
+//int (){
+//
+//}
+
+
+
+
+
+
+
+
+
+
+
 Button buttons[4] = {
     {60, 300, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "1"},
     {60, 350 + (BUTTON_HEIGHT) * 1, OPTION_BUTTON_WIDTH, BUTTON_HEIGHT, "2"},
@@ -105,10 +119,10 @@ void draw_title_screen(SDL_Renderer *renderer, TTF_Font *font) {
 
     // GIZMOS
     if (Gizmos) {
-        // Vertical Midlle line
+        // Vertical Middle line
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255); // Yellow
         SDL_RenderDrawLine(renderer, WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT);
-        // Horizontal Midlle line
+        // Horizontal Middle line
         SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2);
     }
 
@@ -189,8 +203,8 @@ int play_clicked(int x, int y)
 
 
 void draw_barsA(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
-    SDL_SetRenderDrawColor(renderer, 153, 196, 210, 0); // Black background
-    SDL_RenderClear(renderer);
+//    SDL_SetRenderDrawColor(renderer, 153, 196, 210, 0); // Black background
+//    SDL_RenderClear(renderer);
 
     // Draw lines
     for (int k = 0; k < n; k++) {
@@ -222,10 +236,10 @@ void draw_barsA(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
             SDL_RenderDrawRect(renderer, &(SDL_Rect){WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, WINDOW_WIDTH / 3, (WINDOW_HEIGHT / 2)});
 
 
-            // Vertical Midlle line
+            // Vertical Middle line
             SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255); // Yellow
             SDL_RenderDrawLine(renderer, WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT);
-            // Horizontal Midlle line
+            // Horizontal Middle line
             SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2);
 
             // Sorts Lines
@@ -233,12 +247,12 @@ void draw_barsA(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
             SDL_RenderDrawRect(renderer, &bar);
         }
     }
-    SDL_RenderPresent(renderer);
+//    SDL_RenderPresent(renderer);
 }
 
 void draw_barsB(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
-    SDL_SetRenderDrawColor(renderer, 153, 196, 210, 0); // Black background
-    SDL_RenderClear(renderer);
+//    SDL_SetRenderDrawColor(renderer, 153, 196, 210, 0); // Black background
+//    SDL_RenderClear(renderer);
 
     // Draw lines
     for (int k = 0; k < n; k++) {
@@ -263,7 +277,7 @@ void draw_barsB(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
             SDL_RenderDrawRect(renderer, &(bar2));
         }
     }
-    SDL_RenderPresent(renderer);
+//    SDL_RenderPresent(renderer);
 }
 
 void draw_barsC(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
@@ -293,7 +307,7 @@ void draw_barsC(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
             SDL_RenderDrawRect(renderer, &(bar3));
         }
     }
-    SDL_RenderPresent(renderer);
+//    SDL_RenderPresent(renderer);
 }
 
 void draw_barsD(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
@@ -323,6 +337,6 @@ void draw_barsD(SDL_Renderer *renderer, int arr[], int n, int i, int j) {
             SDL_RenderDrawRect(renderer, &(bar4));
         }
     }
-    SDL_RenderPresent(renderer);
+//    SDL_RenderPresent(renderer);
 }
 

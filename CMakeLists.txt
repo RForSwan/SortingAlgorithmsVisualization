@@ -22,6 +22,7 @@ add_executable(SortingAlgorithmsVisualization
         logger.c
         logger.h
         thread.c
-        thread.h)
+        thread.h
+        compare.c)
 
 target_link_libraries(SortingAlgorithmsVisualization PRIVATE SDL2 SDL2_ttf SDL2_gfx)

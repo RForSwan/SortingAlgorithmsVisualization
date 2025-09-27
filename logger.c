@@ -3,7 +3,6 @@
 
 ///// PRIVATE /////
 
-
 char* get_current_time_string()
 {
     time_t now;
@@ -15,12 +14,6 @@ char* get_current_time_string()
 
 ///// PUBLIC /////
 
-
-/// @brief Creates a logger instance
-/// @param to_file Whether to log to file
-/// @param to_stream Whether to log to stream (stdout)
-/// @param log_level Minimum log level to log
-/// @return Logger instance
 Logger* logger_create(bool to_file, bool to_stream, int log_level)
 {
     Logger *log = calloc(1,sizeof(Logger));
@@ -32,8 +25,7 @@ Logger* logger_create(bool to_file, bool to_stream, int log_level)
 
     if(to_file)
     {
-        log->file = fopen(LOG_FILE, "w");
-        fseek(log->file, 0, SEEK_END);
+        log->file = fopen(LOG_FILE, "a");
         AssertNew(log->file);
     }
     if(to_stream) log->stream = stdout;
@@ -41,8 +33,7 @@ Logger* logger_create(bool to_file, bool to_stream, int log_level)
     return log;
 }
 
-/// @brief Destroys the logger instance
-/// @param log Logger instance
+
 void logger_destroy(Logger* log)
 {
     if(log->file)
@@ -58,12 +49,7 @@ void logger_destroy(Logger* log)
 }
 
 
-/// @brief Logs a message with the sufficient log level
-/// @param log Logger instance
-/// @param log_level Log level of the message
-/// @param message Message format (like printf)
-/// @param ... Variable arguments for the message format
-/// @return LOG_OK if logged, LOG_IGNORED if log level too low, LOG_ERROR if error
+
 int logger_log(Logger* log, int log_level, const char* message, ...)
 {
     // Check if log level is sufficient
@@ -91,12 +77,14 @@ int logger_log(Logger* log, int log_level, const char* message, ...)
     {
         err = fprintf(log->file,"[%s][TYPE : %7s] -> %s\n",
                       time_str,level_str,message_str);
+        fflush(log->file);
         if(err < 0) return LOG_ERROR;
     }
     if(log->stream)
     {
         err = fprintf(log->stream,"[%s][TYPE : %7s] -> %s\n",
                       time_str,level_str,message_str);
+        fflush(log->stream);
         if(err < 0) return LOG_ERROR;
     }
 

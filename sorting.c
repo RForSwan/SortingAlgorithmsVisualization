@@ -1,5 +1,14 @@
 #include "settings.h"
 
+void test_sort1(App* app, const unsigned int nb_elements, const size_t size, void* array)
+{
+    insertion_sort(app->renderer, (int*)array, nb_elements);
+}
+
+void test_sort2(App* app, const unsigned int nb_elements, const size_t size, void* array)
+{
+    bubble_sort(app->renderer, (int*)array, nb_elements);
+}
 
 // Insertion Sort Visualization
 void insertion_sort(SDL_Renderer *renderer, int arr[], int n) {

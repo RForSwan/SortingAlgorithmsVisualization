@@ -8,10 +8,10 @@ int main(int argc, char *argv[]) {
     ///// INITIALIZATION /////
     App* app = app_init(LOG_LEVEL_VERBOSE);
 
-    int* arrayA = utils_createRandomIntArray(N);
-    int* arrayB = utils_createRandomIntArray(N);
-    int* arrayC = utils_createRandomIntArray(N);
-    int* arrayD = utils_createRandomIntArray(N);
+    int* arrayA = (int*)utils_createSortedArray(app->logger, N, sizeof(int), SORTED_RANDOM, utils_sorted_GenAndAssign_int);
+    int* arrayB = (int*)utils_createSortedArray(app->logger, N, sizeof(int), SORTED_RANDOM, utils_sorted_GenAndAssign_int);
+    int* arrayC = (int*)utils_createSortedArray(app->logger, N, sizeof(int), SORTED_RANDOM, utils_sorted_GenAndAssign_int);
+    int* arrayD = (int*)utils_createSortedArray(app->logger, N, sizeof(int), SORTED_RANDOM, utils_sorted_GenAndAssign_int);
 
 
     // Play Screen
@@ -74,44 +74,13 @@ int main(int argc, char *argv[]) {
 }
 
 #elif 1
+
 int main(int argc, char *argv[]) {
+    App* app = app_init(LOG_LEVEL_VERBOSE);
 
-    int size = 100;
+    app_play(app);
 
-    Logger* logger = logger_create(LOG_TO_FILE_Y, LOG_TO_STREAM_Y, LOG_LEVEL_VERBOSE);
-
-    int* array = utils_createSortedArray(logger, size, sizeof(int), SORTED_RANDOM, utils_sorted_GenAndAssign_int);
-    for(int i=0; i<size; i++) printf("%d ", array[i]);
-    printf("\n");
-
-    float* arrayf = utils_createSortedArray(logger, size, sizeof(float), SORTED_RANDOM, utils_sorted_GenAndAssign_float);
-    for(int i=0; i<size; i++) printf("%.1f ", arrayf[i]);
-    printf("\n");
-
-    utils_destroyArray(logger, 10, sizeof(int), array, NULL);
-    utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
-
-    array = utils_createSortedArray(logger, size, sizeof(int), SORTED_INCREASING, utils_sorted_GenAndAssign_int);
-    for(int i=0; i<size; i++) printf("%d ", array[i]);
-    printf("\n");
-
-    arrayf = utils_createSortedArray(logger, size, sizeof(float), SORTED_INCREASING, utils_sorted_GenAndAssign_float);
-    for(int i=0; i<size; i++) printf("%.1f ", arrayf[i]);
-    printf("\n");
-
-    utils_destroyArray(logger, 10, sizeof(int), array, NULL);
-    utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
-
-    array = utils_createSortedArray(logger, size, sizeof(int), SORTED_DECREASING, utils_sorted_GenAndAssign_int);
-    for(int i=0; i<size; i++) printf("%d ", array[i]);
-    printf("\n");
-
-    arrayf = utils_createSortedArray(logger, size, sizeof(float), SORTED_DECREASING, utils_sorted_GenAndAssign_float);
-    for(int i=0; i<size; i++) printf("%.1f ", arrayf[i]);
-    printf("\n");
-
-    utils_destroyArray(logger, 10, sizeof(int), array, NULL);
-    utils_destroyArray(logger, 10, sizeof(float), arrayf, NULL);
+    app_quit(app);
 }
 
 #endif
