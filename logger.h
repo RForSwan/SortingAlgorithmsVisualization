@@ -7,13 +7,16 @@
 ///// LOGGER /////
 
 #define LOG_FILE "events.log"
-#define BUFFER_SIZE 2048
+#define BUFFER_SIZE 4096
 
 typedef struct Logger_s {
     FILE* file;
     FILE* stream;
 
     int  log_level;
+
+    char* lastOutput;
+    int nb_occurence;
 
 } Logger;
 

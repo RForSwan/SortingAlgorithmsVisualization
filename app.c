@@ -6,11 +6,11 @@ App* app_init(int LOG_LEVEL){
     /// Logger initialization
     Logger* logger = logger_create(LOG_TO_FILE_Y, LOG_TO_STREAM_Y, LOG_LEVEL_DEBUG);
     if(!logger) {
-        printf("app_init : Logger initialization failed\n");
+        perror("app_init : Logger initialization failed\n");
         assert(false);
         abort();
     }
-    logger_log(logger, LOG_LEVEL_INFO, "app_init : Logger initialized successfully");
+    logger_log(logger, LOG_LEVEL_INFO, "app_init : Logger initialized successfully with level %s", LOG_LEVELS_NAME[LOG_LEVEL]);
     logger_log(logger, LOG_LEVEL_INFO, "app_init : Starting all dependencies ");
 
     /// Utils initialization
@@ -18,7 +18,7 @@ App* app_init(int LOG_LEVEL){
 
     /// SDL2 initialization
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        logger_log(logger, LOG_LEVEL_FATAL,"app_init : SDL_Init Error: %s\n", SDL_GetError());
+        logger_log(logger, LOG_LEVEL_FATAL,"app_init : SDL_Init Error: %s", SDL_GetError());
         assert(false);
         abort();
     }
@@ -27,7 +27,7 @@ App* app_init(int LOG_LEVEL){
 
     /// SDL2 TTF initialization
     if(TTF_Init() == -1) {
-        logger_log(logger, LOG_LEVEL_FATAL,"app_init : TTF_Init: %s\n", TTF_GetError());
+        logger_log(logger, LOG_LEVEL_FATAL,"app_init : TTF_Init: %s", TTF_GetError());
         assert(false);
         abort();
     }
@@ -36,7 +36,7 @@ App* app_init(int LOG_LEVEL){
     /// Create Window
     SDL_Window* window = SDL_CreateWindow("Sorting Algorithms Visualizer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if(!window) {
-        logger_log(logger, LOG_LEVEL_FATAL,"app_init : Failed creating window %s\n", SDL_GetError());
+        logger_log(logger, LOG_LEVEL_FATAL,"app_init : Failed creating window %s", SDL_GetError());
         assert(false);
         abort();
     }
@@ -46,28 +46,48 @@ App* app_init(int LOG_LEVEL){
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer)
     {
-        logger_log(logger, LOG_LEVEL_FATAL,"app_init : Failed creating renderer %s\n", SDL_GetError());
+        logger_log(logger, LOG_LEVEL_FATAL,"app_init : Failed creating renderer %s", SDL_GetError());
         assert(false);
         abort();
     }
     else logger_log(logger, LOG_LEVEL_INFO, "app_init : Renderer created successfully");
 
     /// Load Font
-    TTF_Font *font = TTF_OpenFont("../Porscha.ttf", 32);
-    if (!font) {
-        logger_log(logger, LOG_LEVEL_FATAL,"app_init : Failed to load font: %s\n", TTF_GetError());
+    TTF_Font *font = TTF_OpenFont("./Porscha.ttf", 32);
+    if (!font)
+    {
+        logger_log(logger, LOG_LEVEL_FATAL,"app_init : Failed to load font: %s", TTF_GetError());
         assert(false);
         abort();
     }
     else logger_log(logger, LOG_LEVEL_INFO, "app_init : Font loaded successfully");
 
-//    thrd_t* threads = thread_create(logger, NB_THREADS);
-//    if(!threads) {
-//        logger_log(logger, LOG_LEVEL_FATAL, "Threads initialization failed\n");
-//        assert(false);
-//        abort();
-//    }
-//    else logger_log(logger, LOG_LEVEL_INFO, "Threads initialized successfully");
+    Inputs* inputs = inputs_create();
+    if(!inputs)
+    {
+        logger_log(logger, LOG_LEVEL_FATAL, "app_init : Inputs gestion creation failed");
+        assert(false);
+        abort();
+    }
+    else logger_log(logger, LOG_LEVEL_INFO, "app_init : Inputs gestion created successfully");
+
+    AppData *appData = calloc(1, sizeof(AppData));
+    if(!appData)
+    {
+        logger_log(logger, LOG_LEVEL_FATAL, "app_init : Failed to create app data");
+        assert(false);
+        abort();
+    }
+    else logger_log(logger, LOG_LEVEL_INFO, "app_init : App data created successfully");
+
+    Colors *colorSet = visual_createColorSet();
+    if(!colorSet)
+    {
+        logger_log(logger, LOG_LEVEL_FATAL, "app_init : Failed to create color set");
+        assert(false);
+        abort();
+    }
+    else logger_log(logger, LOG_LEVEL_INFO, "app_init : Color set created successfully");
 
 
     /// Create App
@@ -83,21 +103,53 @@ App* app_init(int LOG_LEVEL){
     app->sort_running = false;
 
     app->logger = logger;
+    app->inputs = inputs;
 
-    app->nb_threads = NB_THREADS;
-//    app->threads    = threads;
+    app->appData = NULL;
 
     return app;
 
 }
 
-void app_play(App* app){
+void app_play(App* app)
+{
     logger_log(app->logger, LOG_LEVEL_INFO, "app_play : App starting ");
 
-    const size_t int_size   = sizeof(int);
-    const size_t char_size  = sizeof(char);
-    const size_t str_size   = sizeof(char*);
-    const size_t float_size = sizeof(float);
+    int state = -1;
+
+    while(true)
+    {
+        ///// MENU LOOP /////
+        state = app_settingsScreen(app);
+        if(state == APP_SCREEN_QUIT) break;
+
+        ///// SORTING LOOP /////
+        state = app_visualizationScreen(app);
+        if(state == APP_SCREEN_QUIT) break;
+    }
+}
+
+int app_settingsScreen(App *app)
+{
+    logger_log(app->logger, LOG_LEVEL_INFO, "app_settingsScreen : Currently on settings screen ");
+
+    int state = -1;
+
+    while(true)
+    {
+        inputs_get(app);
+        if(app->inputs->quit) return APP_SCREEN_QUIT;
+        if(app->inputs->pass) return APP_SCREEN_PASS;
+
+        visual_drawSettingsScreen(app);
+
+        SDL_RenderPresent(app->renderer);
+    }
+}
+
+int app_visualizationScreen(App *app)
+{
+    logger_log(app->logger, LOG_LEVEL_INFO, "app_visualizationScreen : App starting ");
 
 
     void* array1 = utils_createArray(app->logger, 100, sizeof(int), SORTED_RANDOM, utils_GenAndAssign_int);
@@ -110,22 +162,16 @@ void app_play(App* app){
             .data_size = sizeof(int), .compare_func = compare_int,
             .sorting_algorithm = test_sort2};
 
-    SDL_Thread* threadID1 = SDL_CreateThread(thread_func, "first thread", (void*)&data1);
-    SDL_Thread* threadID2 = SDL_CreateThread(thread_func, "second thread", (void*)&data2);
+    SDL_Thread *threadID1 = SDL_CreateThread(thread_func, "first thread", (void*)&data1);
+    SDL_Thread *threadID2 = SDL_CreateThread(thread_func, "second thread", (void*)&data2);
+    ///// APP LOOP /////
 
-    bool quit = false;
-
-    while(!quit)
+    while(!app->inputs->quit || !app->inputs->pass)
     {
         SDL_RenderClear(app->renderer);
 
-        while(SDL_PollEvent(&app->event) != 0)
-        {
-            if(app->event.type == SDL_QUIT)
-            {
-                quit = true;
-            }
-        }
+        inputs_get(app);
+
         SDL_Delay(DELAY_MS);
 
         //Clear screen
@@ -139,27 +185,14 @@ void app_play(App* app){
         SDL_RenderPresent( app->renderer );
     }
 
-    utils_destroyArray(app->logger, 100, sizeof(int), array1, NULL);
-    utils_destroyArray(app->logger, 100, sizeof(int), array2, NULL);
+    utils_destroyArray(app->logger, 100, int_size, array1, NULL);
+    utils_destroyArray(app->logger, 100, int_size, array2, NULL);
 
-    ///// APP LOOP /////
-//    while(true)
-//    {
-//        ///// MENU LOOP /////
-//        while(true)
-//        {
-//
-//        }
-//
-//        ///// SORTING LOOP /////
-//        while(true)
-//        {
-//
-//        }
-//    }
+    if(app->inputs->quit) return APP_SCREEN_QUIT;
+    else                  return APP_SCREEN_PASS;
 }
 
-void app_quit(App* app){
+void app_quit(App *app){
     logger_log(app->logger, LOG_LEVEL_INFO, "app_quit : App ending ");
 
     TTF_CloseFont(app->font);
@@ -173,6 +206,12 @@ void app_quit(App* app){
 
     logger_destroy(app->logger);
     app->logger = NULL;
+
+    free(app->appData);
+    app->appData = NULL;
+
+    visual_destroyColorSet(app->colorSet);
+    app->colorSet = NULL;
 
     free(app);
 

@@ -1,7 +1,6 @@
 #include "settings.h"
 
 int DELAY_MS = 5;
-int Gizmos = 0;
 
 #if 0
 int main(int argc, char *argv[]) {

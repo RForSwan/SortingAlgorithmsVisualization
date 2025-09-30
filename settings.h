@@ -21,6 +21,7 @@
 /// Headers
 #include "app.h"
 #include "compare.h"
+#include "inputs.h"
 #include "logger.h"
 #include "sorting.h"
 #include "stats.h"
@@ -36,7 +37,6 @@
 #define N 100
 #define BAR_WIDTH (WINDOW_WIDTH / N)
 extern int DELAY_MS;
-extern int Gizmos;
 
 // Play Button
 #define BUTTON_WIDTH 200
