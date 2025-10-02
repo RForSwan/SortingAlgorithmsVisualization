@@ -7,6 +7,7 @@ gcc : v11.4.0
 Ubuntu : 22.04.2
 
 ## Compilation :
+To compile then execute
 ```bash
 gcc -o SAV.out *.c -lSDL2 -lSDL2_ttf -lSDL2_gfx -Werror && ./SAV.out
 ```

@@ -35,7 +35,7 @@ void utils_destroyArray(Logger* logger, const unsigned int nb_elements, const si
 }
 
 void* utils_copyArray(Logger* logger, const unsigned int nb_elements, const size_t size, const void* const originalArray){
-    logger_log(logger, LOG_LEVEL_INFO, "utils_copyArray, copying array at %p",originalArray);
+    logger_log(logger, LOG_LEVEL_INFO, "utils_copyArray : copying array at %p",originalArray);
     void* newArray = calloc(nb_elements, size);
     for(int i = 0; i < nb_elements; i++)
     {

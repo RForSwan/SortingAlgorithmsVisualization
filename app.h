@@ -46,6 +46,7 @@ typedef struct AppData_s
 
 }AppData;
 
+/// @brief Structure with all the general data
 typedef struct App_s
 {
     SDL_Window   *window;
@@ -60,7 +61,13 @@ typedef struct App_s
 
     AppData *appData;
 
+    /// @brief Light mode if true, Dark mode otherwise
+    bool lightMode;
     Colors *colorSet;
+
+    bool threadsRun;
+
+    SDL_mutex* rendererUse;
 
 }App;
 

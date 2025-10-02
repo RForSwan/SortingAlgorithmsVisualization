@@ -31,7 +31,7 @@ typedef struct ThreadData_s
     /// @param data_b
     int (*compare_func)(Logger* logger, const void* data_a, const void* data_b);
 
-    void (*sorting_algorithm)(App* app, const unsigned int nb_elements, const size_t size, void* array );
+    void (*sorting_algorithm)(App* app, const unsigned int nb_elements, const size_t size, void* array, int (*compare_func)(Logger* logger, const void* data_a, const void* data_b));
 
 } ThreadData;
 

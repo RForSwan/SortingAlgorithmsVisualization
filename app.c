@@ -89,6 +89,14 @@ App* app_init(int LOG_LEVEL){
     }
     else logger_log(logger, LOG_LEVEL_INFO, "app_init : Color set created successfully");
 
+    SDL_mutex *rendererUse = SDL_CreateMutex();
+    if(!rendererUse)
+    {
+        logger_log(logger, LOG_LEVEL_FATAL, "app_init : Failed to create mutex");
+        assert(false);
+        abort();
+    }
+    else logger_log(logger, LOG_LEVEL_INFO, "app_init : Mutex created successfully");
 
     /// Create App
 
@@ -107,6 +115,13 @@ App* app_init(int LOG_LEVEL){
 
     app->appData = NULL;
 
+    app->lightMode = true;
+    app->colorSet = colorSet;
+
+    app->threadsRun = true;
+
+    app->rendererUse = rendererUse;
+
     return app;
 
 }
@@ -123,9 +138,14 @@ void app_play(App* app)
         state = app_settingsScreen(app);
         if(state == APP_SCREEN_QUIT) break;
 
+        inputs_clear(app);
+
+
         ///// SORTING LOOP /////
         state = app_visualizationScreen(app);
         if(state == APP_SCREEN_QUIT) break;
+
+        inputs_clear(app);
     }
 }
 
@@ -135,13 +155,36 @@ int app_settingsScreen(App *app)
 
     int state = -1;
 
+#define NB_BUTTONS_SETTINGS 5
+
+    SDL_Rect buttons_r[NB_BUTTONS_SETTINGS] =
+            {
+                    {.x = (WINDOW_WIDTH - BUTTON_WIDTH) / 2, .y = (WINDOW_HEIGHT - BUTTON_HEIGHT) - MARGIN, .w = BUTTON_WIDTH, .h = BUTTON_HEIGHT},
+                    {.x = 60, .y = 300,                       .w = OPTION_BUTTON_WIDTH, .h = BUTTON_HEIGHT},
+                    {.x = 60, .y = 350 + (BUTTON_HEIGHT) * 1, .w = OPTION_BUTTON_WIDTH, .h = BUTTON_HEIGHT},
+                    {.x = 60, .y = 400 + (BUTTON_HEIGHT) * 2, .w = OPTION_BUTTON_WIDTH, .h = BUTTON_HEIGHT},
+                    {.x = 60, .y = 450 + (BUTTON_HEIGHT) * 3, .w = OPTION_BUTTON_WIDTH, .h = BUTTON_HEIGHT},
+            };
+    Button buttons[NB_BUTTONS_SETTINGS] =
+            {
+                    {.rect = buttons_r[0], .label = "Play", .hovered = false, .pressed = false},
+                    {.rect = buttons_r[1], .label = "1",    .hovered = false, .pressed = false},
+                    {.rect = buttons_r[2], .label = "2",    .hovered = false, .pressed = false},
+                    {.rect = buttons_r[3], .label = "3",    .hovered = false, .pressed = false},
+                    {.rect = buttons_r[4], .label = "4",    .hovered = false, .pressed = false},
+            };
+
     while(true)
     {
-        inputs_get(app);
+        inputs_clear(app);
+        SDL_RenderClear(app->renderer);
+
+        inputs_get(app, buttons, NB_BUTTONS_SETTINGS);
         if(app->inputs->quit) return APP_SCREEN_QUIT;
         if(app->inputs->pass) return APP_SCREEN_PASS;
 
-        visual_drawSettingsScreen(app);
+        visual_drawSettingsScreen(app, buttons);
+        SDL_Delay(DELAY_MS);
 
         SDL_RenderPresent(app->renderer);
     }
@@ -153,37 +196,35 @@ int app_visualizationScreen(App *app)
 
 
     void* array1 = utils_createArray(app->logger, 100, sizeof(int), SORTED_RANDOM, utils_GenAndAssign_int);
-    ThreadData data1 = {.ID = 1, .app = app, .nb_elements = 100, .array = array1,
+    ThreadData data1 = {.ID = 0, .app = app, .nb_elements = 100, .array = array1,
             .data_size = sizeof(int), .compare_func = compare_int,
             .sorting_algorithm = test_sort1};
 
     void* array2 = utils_copyArray(app->logger, 100, sizeof(int), array1);
-    ThreadData data2 = {.ID = 2, .app = app, .nb_elements = 100, .array = array2,
+    ThreadData data2 = {.ID = 1, .app = app, .nb_elements = 100, .array = array2,
             .data_size = sizeof(int), .compare_func = compare_int,
             .sorting_algorithm = test_sort2};
 
     SDL_Thread *threadID1 = SDL_CreateThread(thread_func, "first thread", (void*)&data1);
     SDL_Thread *threadID2 = SDL_CreateThread(thread_func, "second thread", (void*)&data2);
+
     ///// APP LOOP /////
 
-    while(!app->inputs->quit || !app->inputs->pass)
+    while(!app->inputs->quit && !app->inputs->pass)
     {
-        SDL_RenderClear(app->renderer);
+        inputs_clear(app);
+//        SDL_RenderClear(app->renderer);
 
-        inputs_get(app);
+        inputs_get(app, NULL, 0);
 
+        visual_drawVisualizationScreen(app, NULL);
         SDL_Delay(DELAY_MS);
 
-        //Clear screen
-//        SDL_SetRenderDrawColor( app->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-//        SDL_RenderClear( app->renderer );
+        SDL_RenderPresent(app->renderer);
 
-        //Render prompt
-//        gSplashTexture.render( 0, 0 );
-
-        //Update screen
-        SDL_RenderPresent( app->renderer );
     }
+    app->threadsRun = false;
+    SDL_Delay(DELAY_MS*10);
 
     utils_destroyArray(app->logger, 100, int_size, array1, NULL);
     utils_destroyArray(app->logger, 100, int_size, array2, NULL);
@@ -204,14 +245,18 @@ void app_quit(App *app){
     SDL_DestroyWindow(app->window);
     app->window = NULL;
 
-    logger_destroy(app->logger);
-    app->logger = NULL;
-
     free(app->appData);
     app->appData = NULL;
 
     visual_destroyColorSet(app->colorSet);
     app->colorSet = NULL;
+
+    inputs_destroy(app->inputs);
+    app->inputs = NULL;
+
+    logger_destroy(app->logger);
+    app->logger = NULL;
+
 
     free(app);
 
