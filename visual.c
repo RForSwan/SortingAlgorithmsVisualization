@@ -198,8 +198,121 @@ void visual_drawVisualizationScreen(App *app, Button *buttons)
 {
     ///// BACKGROUND /////
 
-//    draw_gradient_background(app, app->colorSet->Background_top_LM, app->colorSet->Background_bot_LM);
+    draw_gradient_background(app, app->colorSet->Background_top_LM, app->colorSet->Background_bot_LM);
 
+    ///// Top stats bar background /////
+    SDL_mutexP(app->rendererUse);
+    SDL_SetRenderDrawColor(app->renderer, 30, 30, 30, 255); // dark bar
+    SDL_Rect topRect = {.x = 0, .y = 0, .w = WINDOW_WIDTH, .h = TOP_BAR_HEIGHT};
+    SDL_RenderFillRect(app->renderer, &topRect);
+    SDL_mutexV(app->rendererUse);
+
+    // Prepare stat strings
+    char left_stats[128];
+    char right_stats[128];
+    double elapsed_timeA = 0.0, elapsed_timeB = 0.0;
+    Uint64 startA = 0, startB = 0;
+    bool runningA = false, runningB = false;
+
+    if (app->sortTime_mutex) SDL_mutexP(app->sortTime_mutex);
+    elapsed_timeA = app->SortA_time;
+    elapsed_timeB = app->SortB_time;
+    startA = app->SortA_ticks_start;
+    startB = app->SortB_ticks_start;
+    runningA = app->SortA_running;
+    runningB = app->SortB_running;
+    if (app->sortTime_mutex) SDL_mutexV(app->sortTime_mutex);
+
+    if (runningA) {
+        Uint64 now = SDL_GetPerformanceCounter();
+        elapsed_timeA = (double)(now - startA) * 1.0 / (double)SDL_GetPerformanceFrequency();
+    }
+    if (runningB) {
+        Uint64 now = SDL_GetPerformanceCounter();
+        elapsed_timeB = (double)(now - startB) * 1.0 / (double)SDL_GetPerformanceFrequency();
+    }
+
+    // Safe throughput calculation
+    const double eps = 1e-9;
+    double elems_per_secA = 0.0, elems_per_secB = 0.0;
+    if (elapsed_timeA > eps) elems_per_secA = (double)app->selected_nb_elements / elapsed_timeA;
+    if (elapsed_timeB > eps) elems_per_secB = (double)app->selected_nb_elements / elapsed_timeB;
+
+    // Human readable status
+    char statusA[16] = "IDLE";
+    char statusB[16] = "IDLE";
+    if (runningA) strncpy(statusA, "RUNNING", sizeof(statusA));
+    else if (app->SortA_time > 0.0) strncpy(statusA, "FINISHED", sizeof(statusA));
+    if (runningB) strncpy(statusB, "RUNNING", sizeof(statusB));
+    else if (app->SortB_time > 0.0) strncpy(statusB, "FINISHED", sizeof(statusB));
+
+    // Left: per-sort info (count / status / time / throughput)
+    // Example: "A: RUNNING | T=0.123s | E/s=258.1 ||| B: FINISHED | T=1.234s | E/s=26.0"
+    snprintf(left_stats, sizeof(left_stats),
+             "A: %s  |  T=%.3fs  |  E/s=%.1f   |   |   |   B: %s  |  T=%.3fs  |  E/s=%.1f",
+             statusA, elapsed_timeA, elems_per_secA,
+             statusB, elapsed_timeB, elems_per_secB);
+
+    // Right: runtime toggles and simple metrics
+    snprintf(right_stats, sizeof(right_stats),
+             "Delay=%dms  Gizmos=%s  Elements=%d",
+             DELAY_MS,
+             app->inputs->gizmos ? "ON" : "OFF",
+             app->selected_nb_elements);
+
+    // // Example info: number of elements and sorting status on left, delay and gizmo on right
+    // snprintf(left_stats, sizeof(left_stats), "Sort A: QT=%d - TIME=%.1lfS ||| Sort B: QT=%d - TIME=%.1lfS", app->selected_nb_elements, elapsed_timeA, app->selected_nb_elements, elapsed_timeB, app->selected_nb_elements);
+    // snprintf(right_stats, sizeof(right_stats), "Delay=%d ms   Gizmos=%s   ThreadsRun=%s", DELAY_MS,
+    //          app->inputs->gizmos ? "ON" : "OFF", app->threadsRun ? "YES" : "NO");
+
+    // Render left stats
+    SDL_Color textColor = {255, 255, 255, 255};
+    SDL_Surface *surf_left = TTF_RenderText_Blended(app->font, left_stats, textColor);
+    if (surf_left) {
+        SDL_Texture *tex_left;
+        SDL_mutexP(app->rendererUse);
+        tex_left = SDL_CreateTextureFromSurface(app->renderer, surf_left);
+        SDL_mutexV(app->rendererUse);
+        if (tex_left) {
+            int tw, th;
+            SDL_QueryTexture(tex_left, NULL, NULL, &tw, &th);
+            SDL_Rect dest_left = {.x = 10, .y = (TOP_BAR_HEIGHT - th) / 2, .w = tw, .h = th};
+            SDL_mutexP(app->rendererUse);
+            SDL_RenderCopy(app->renderer, tex_left, NULL, &dest_left);
+            SDL_mutexV(app->rendererUse);
+            SDL_DestroyTexture(tex_left);
+        }
+        //SDL_FreeSurface(surf_left);
+    }
+
+    // Render right stats
+    SDL_Surface *surf_right = TTF_RenderText_Blended(app->font, right_stats, textColor);
+    if (surf_right) {
+        SDL_Texture *tex_right;
+        SDL_mutexP(app->rendererUse);
+        tex_right = SDL_CreateTextureFromSurface(app->renderer, surf_right);
+        SDL_mutexV(app->rendererUse);
+        if (tex_right) {
+            int tw, th;
+            SDL_QueryTexture(tex_right, NULL, NULL, &tw, &th);
+            SDL_Rect dest_right = {.x = WINDOW_WIDTH - tw - 10, .y = (TOP_BAR_HEIGHT - th) / 2, .w = tw, .h = th};
+            SDL_mutexP(app->rendererUse);
+            SDL_RenderCopy(app->renderer, tex_right, NULL, &dest_right);
+            SDL_mutexV(app->rendererUse);
+            SDL_DestroyTexture(tex_right);
+        }
+        SDL_FreeSurface(surf_right);
+    }
+
+    // Draw dividing line under top bar
+    SDL_mutexP(app->rendererUse);
+    SDL_SetRenderDrawColor(app->renderer, 255, 255, 255, 100);
+    SDL_RenderDrawLine(app->renderer, 0, TOP_BAR_HEIGHT, WINDOW_WIDTH, TOP_BAR_HEIGHT);
+    SDL_mutexV(app->rendererUse);
+
+    // Call draws for left/right sort areas (they handle NULL arr)
+    draw_barsA(app, NULL, app->selected_nb_elements, -1, -1);
+    draw_barsB(app, NULL, app->selected_nb_elements, -1, -1);
 
     ///// GIZMOS /////
     if (app->inputs->gizmos) {
@@ -209,6 +322,14 @@ void visual_drawVisualizationScreen(App *app, Button *buttons)
         // Horizontal Lines
         SDL_RenderDrawLine(app->renderer, 0, WINDOW_HEIGHT / 11, WINDOW_WIDTH, WINDOW_HEIGHT / 11);
         SDL_RenderDrawLine(app->renderer, 0, (6 * WINDOW_HEIGHT) / 11, WINDOW_WIDTH, (6 * WINDOW_HEIGHT) / 11);
+    }
+    // Optional gizmos lines (below top bar)
+    if (app->inputs->gizmos) {
+        SDL_mutexP(app->rendererUse);
+        SDL_SetRenderDrawColor(app->renderer, 255, 255, 0, 255);
+        SDL_RenderDrawLine(app->renderer, WINDOW_WIDTH / 2, TOP_BAR_HEIGHT, WINDOW_WIDTH / 2, WINDOW_HEIGHT);
+        SDL_RenderDrawLine(app->renderer, 0, TOP_BAR_HEIGHT, WINDOW_WIDTH, TOP_BAR_HEIGHT);
+        SDL_mutexV(app->rendererUse);
     }
 }
 
@@ -241,6 +362,29 @@ void visual_drawVisualizationScreen(App *app, Button *buttons)
 //
 //    SDL_RenderPresent(renderer);
 //}
+
+void visual_replay_sorted(App *app, int arr[], int n, void (*draw_func)(App*, int*, int, int, int))
+{
+    if (!app || !arr || n <= 0 || !draw_func) return;
+
+    Pair *pairs = calloc(n, sizeof(Pair));
+    if (!pairs) return;
+
+    for (int i = 0; i < n; ++i) {
+        pairs[i].value = arr[i];
+        pairs[i].idx = i;
+    }
+
+    qsort(pairs, n, sizeof(Pair), pair_cmp);
+
+    for (int k = 0; k < n && app->threadsRun; ++k) {
+        int idx = pairs[k].idx;
+        draw_func(app, arr, n, idx, -1); // highlight single bar
+        SDL_Delay(DELAY_MS);
+    }
+
+    free(pairs);
+}
 
 
 // Check for mouse click in button
@@ -317,7 +461,7 @@ bool visual_isHovered(SDL_Rect button_r, int x, int y)
 }*/
 
 
-void draw_barsA(App* app, int arr[], int n, int i, int j) {
+/*void draw_barsA(App* app, int arr[], int n, int i, int j) {
 //    SDL_SetRenderDrawColor(renderer, 153, 196, 210, 0); // Black background
 //    SDL_RenderClear(renderer);
     SDL_mutexP(app->rendererUse);
@@ -374,8 +518,158 @@ void draw_barsA(App* app, int arr[], int n, int i, int j) {
 //        }
     }
 //    SDL_RenderPresent(renderer);
-}
+}*/
 
+void draw_barsA(App* app, int arr[], int n, int i, int j)
+{
+    if (!app) return;
+
+    static int *saved_arr = NULL;
+    static int saved_n = 0;
+
+    if (arr && n > 0) {
+        // update saved
+        int *tmp = realloc(saved_arr, sizeof(int) * n);
+        if (tmp) {
+            saved_arr = tmp;
+            memcpy(saved_arr, arr, sizeof(int) * n);
+            saved_n = n;
+        } else {
+            // realloc failed, keep old saved_arr
+        }
+    } else {
+        arr = saved_arr;
+        n = saved_n;
+    }
+
+    if (!arr || n <= 0) return; // nothind to draw
+
+    const int area_x = 0;
+    const int area_y = TOP_BAR_HEIGHT;
+    const int area_w = WINDOW_WIDTH / 2;
+    const int area_h = WINDOW_HEIGHT - TOP_BAR_HEIGHT;
+
+    // Clear left area background
+    SDL_mutexP(app->rendererUse);
+    SDL_SetRenderDrawColor(app->renderer, 153, 196, 210, 255);
+    SDL_RenderFillRect(app->renderer, &(SDL_Rect){.x = area_x, .y = area_y, .w = area_w, .h = area_h});
+    SDL_mutexV(app->rendererUse);
+
+    // Compute per-bar geometry
+    int slot_w = area_w / n;
+    int bar_w = slot_w > 1 ? slot_w - 1 : 1;
+
+    for (int k = 0; k < n; k++) {
+        // choose color
+        if (k == i || k == j) {
+            SDL_mutexP(app->rendererUse);
+            SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // compared bars red
+            sound_play_tone_from_value(k, app->selected_nb_elements, 150, 96);
+            SDL_mutexV(app->rendererUse);
+        } else {
+            int color_value = (arr[k] * 255) / N;
+            if (color_value < 0) color_value = 0;
+            if (color_value > 255) color_value = 255;
+            SDL_mutexP(app->rendererUse);
+            SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
+            SDL_mutexV(app->rendererUse);
+        }
+
+        // height and position (bottom-aligned inside area)
+        int bar_height = (arr[k] * area_h) / N;
+        if (bar_height < 1) bar_height = 1;
+        int bx = area_x + k * slot_w;
+        int by = area_y + (area_h - bar_height);
+
+        SDL_Rect bar = {.x = bx, .y = by, .w = bar_w, .h = bar_height};
+        SDL_mutexP(app->rendererUse);
+        SDL_RenderFillRect(app->renderer, &bar);
+        SDL_mutexV(app->rendererUse);
+
+        if (app->inputs && app->inputs->gizmos) {
+            SDL_mutexP(app->rendererUse);
+            SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
+            SDL_RenderDrawRect(app->renderer, &bar);
+            SDL_mutexV(app->rendererUse);
+        }
+    }
+}
+void draw_barsB(App* app, int arr[], int n, int i, int j)
+{
+    if (!app) return;
+
+    static int *saved_arr = NULL;
+    static int saved_n = 0;
+
+    if (arr && n > 0) {
+        // update saved
+        int *tmp = realloc(saved_arr, sizeof(int) * n);
+        if (tmp) {
+            saved_arr = tmp;
+            memcpy(saved_arr, arr, sizeof(int) * n);
+            saved_n = n;
+        } else {
+            // realloc failed, keep old saved_arr
+        }
+    } else {
+        arr = saved_arr;
+        n = saved_n;
+    }
+
+    if (!arr || n <= 0) return; // nothind to draw
+
+
+    const int area_x = WINDOW_WIDTH / 2;
+    const int area_y = TOP_BAR_HEIGHT;
+    const int area_w = WINDOW_WIDTH / 2;
+    const int area_h = WINDOW_HEIGHT - TOP_BAR_HEIGHT;
+
+    // Clear right area background
+    SDL_mutexP(app->rendererUse);
+    SDL_SetRenderDrawColor(app->renderer, 153, 196, 210, 255);
+    SDL_RenderFillRect(app->renderer, &(SDL_Rect){.x = area_x, .y = area_y, .w = area_w, .h = area_h});
+    SDL_mutexV(app->rendererUse);
+
+
+    int slot_w = area_w / n;
+    int bar_w = slot_w > 1 ? slot_w - 1 : 1;
+
+    for (int k = 0; k < n; k++) {
+        // choose color
+        if (k == i || k == j) {
+            SDL_mutexP(app->rendererUse);
+            SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // compared bars red
+            sound_play_tone_from_value(k, app->selected_nb_elements, 150, 96);
+            SDL_mutexV(app->rendererUse);
+        } else {
+            int color_value = (arr[k] * 255) / N;
+            if (color_value < 0) color_value = 0;
+            if (color_value > 255) color_value = 255;
+            SDL_mutexP(app->rendererUse);
+            SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
+            SDL_mutexV(app->rendererUse);
+        }
+
+        int bar_height = (arr[k] * area_h) / N;
+        if (bar_height < 1) bar_height = 1;
+        int bx = area_x + k * slot_w;
+        int by = area_y + (area_h - bar_height);
+
+        SDL_Rect bar2 = {.x = bx, .y = by, .w = bar_w, .h = bar_height};
+        SDL_mutexP(app->rendererUse);
+        SDL_RenderFillRect(app->renderer, &bar2);
+        SDL_mutexV(app->rendererUse);
+
+        if (app->inputs && app->inputs->gizmos) {
+            SDL_mutexP(app->rendererUse);
+            SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
+            SDL_RenderDrawRect(app->renderer, &bar2);
+            SDL_mutexV(app->rendererUse);
+        }
+    }
+
+}
+/*
 void draw_barsB(App* app, int arr[], int n, int i, int j) {
 //    SDL_SetRenderDrawColor(renderer, 153, 196, 210, 0); // Black background
 //    SDL_RenderClear(renderer);
@@ -417,22 +711,23 @@ void draw_barsB(App* app, int arr[], int n, int i, int j) {
 //    SDL_RenderPresent(renderer);
 }
 
+*/
 void draw_barsC(App* app, int arr[], int n, int i, int j) {
     SDL_SetRenderDrawColor(app->renderer, 153, 196, 210, 0); // Black background
-    SDL_RenderClear(app->renderer);
+    //SDL_RenderClear(app->renderer);
 
     // Draw lines
     for (int k = 0; k < n; k++) {
         if (k == i || k == j)
             SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // Red for compared bars
         else {
-            int color_value = (arr[k] * 255) / N;
+            int color_value = (arr[k] * 255) / app->selected_nb_elements;
             SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255); // Green for others
 
         }
 
         // Height proportional to value
-        int bar_height = (arr[k] * WINDOW_HEIGHT) / N / 3;
+        int bar_height = (arr[k] * WINDOW_HEIGHT) / app->selected_nb_elements / 3;
         // Set lines to C position
         SDL_Rect bar3 = {k * BAR_WIDTH / 3, WINDOW_HEIGHT - bar_height, (BAR_WIDTH - 1) / 3, bar_height};
         SDL_RenderFillRect(app->renderer, &bar3);
@@ -449,20 +744,21 @@ void draw_barsC(App* app, int arr[], int n, int i, int j) {
 
 void draw_barsD(App* app, int arr[], int n, int i, int j) {
     SDL_SetRenderDrawColor(app->renderer, 153, 196, 210, 0); // Black background
-    SDL_RenderClear(app->renderer);
+    //SDL_RenderClear(app->renderer);
 
     // Draw lines
     for (int k = 0; k < n; k++) {
         if (k == i || k == j)
             SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // Red for compared bars
         else {
-            int color_value = (arr[k] * 255) / N;
+            int color_value = (arr[k] * 255) / app->selected_nb_elements;
             SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255); // Green for others
 
         }
 
         // Height proportional to value
-        int bar_height = (arr[k] * WINDOW_HEIGHT) / N / 3;
+        int bar_height = (arr[k] * WINDOW_HEIGHT) / app->selected_nb_elements
+        / 3;
         // Set lines to D position
         SDL_Rect bar4 = {k * BAR_WIDTH / 3 + WINDOW_WIDTH / 2, WINDOW_HEIGHT - bar_height, (BAR_WIDTH - 1) / 3, bar_height};
         SDL_RenderFillRect(app->renderer, &bar4);

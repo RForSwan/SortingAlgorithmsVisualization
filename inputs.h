@@ -19,6 +19,6 @@ Inputs *inputs_create();
 void inputs_destroy(Inputs *inputs);
 
 int inputs_get(App *app, Button *buttons, const unsigned int nb_buttons);
-int inputs_clear(App *app);
+void inputs_clear(App *app);
 
 #endif

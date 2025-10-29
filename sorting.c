@@ -117,3 +117,5 @@ void selection_sort(App *app, int arr[], int n) {
         SDL_Delay(DELAY_MS);
     }
 }
+
+

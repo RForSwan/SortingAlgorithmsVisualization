@@ -19,6 +19,8 @@ add_executable(SortingAlgorithmsVisualization
 #        settings.h
         sorting.c
 #        sorting.h
+        sound.c
+#        sound.h
         stats.c
 #        stats.h
         thread.c
@@ -29,4 +31,4 @@ add_executable(SortingAlgorithmsVisualization
 #        visual.h
         )
 
-target_link_libraries(SortingAlgorithmsVisualization PRIVATE SDL2 SDL2_ttf SDL2_gfx)
+target_link_libraries(SortingAlgorithmsVisualization PRIVATE SDL2 SDL2_ttf SDL2_gfx SDL2_mixer PRIVATE m)

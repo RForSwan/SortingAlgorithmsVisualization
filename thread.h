@@ -17,13 +17,13 @@ typedef struct ThreadData_s
     App *app;
 
     /// @brief number of elements inside the array
-    const unsigned int nb_elements;
+    unsigned int nb_elements;
 
     /// @brief array to sort
     void* array;
 
     /// @brief size of the individual data inside the array
-    const size_t data_size;
+    size_t data_size;
 
     /// @brief function used to compare
     /// @param logger

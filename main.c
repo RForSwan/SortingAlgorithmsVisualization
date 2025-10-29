@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
     App* app = app_init(LOG_LEVEL_VERBOSE);
 
+
     app_play(app);
 
     app_quit(app);

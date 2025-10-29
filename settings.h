@@ -17,6 +17,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL_thread.h>
+#include <SDL2/SDL_mixer.h>
 
 /// Headers
 #include "app.h"
@@ -24,6 +25,7 @@
 #include "inputs.h"
 #include "logger.h"
 #include "sorting.h"
+#include "sound.h"
 #include "stats.h"
 #include "thread.h"
 #include "utils.h"
@@ -34,8 +36,10 @@
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
+#define TOP_BAR_HEIGHT 80
 #define N 100
-#define BAR_WIDTH (WINDOW_WIDTH / N)
+// #define BAR_WIDTH (WINDOW_WIDTH / N)
+#define BAR_WIDTH  10
 extern int DELAY_MS;
 
 // Play Button
@@ -43,6 +47,8 @@ extern int DELAY_MS;
 #define OPTION_BUTTON_WIDTH 300
 #define BUTTON_HEIGHT 80
 #define MARGIN 0
+#define NB_BUTTONS_SETTINGS 5
+
 
 #define AssertNew(ptr) { if (ptr == NULL) { assert(false); abort(); } }
 

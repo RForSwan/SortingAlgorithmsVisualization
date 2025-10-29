@@ -9,7 +9,7 @@ Ubuntu : 22.04.2
 ## Compilation :
 To compile then execute
 ```bash
-gcc -o SAV.out *.c -lSDL2 -lSDL2_ttf -lSDL2_gfx -Werror && ./SAV.out
+gcc -o SAV.out *.c -lSDL2 -lSDL2_ttf -lSDL2_gfx -lSDL2_mixer -Werror&& ./SAV.out
 ```
 ## Development guidelines :
 If you want to write code to continue the project, please follow the current development guidelines :

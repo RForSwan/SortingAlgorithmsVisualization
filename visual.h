@@ -31,6 +31,11 @@ typedef struct Colors_s
     SDL_Color ButtonHovered_bot_DM;
 } Colors;
 
+typedef struct { int value; int idx; } Pair;
+static int pair_cmp(const void *a, const void *b) {
+    return ((Pair*)a)->value - ((Pair*)b)->value;
+}
+
 typedef struct Button_s
 {
     SDL_Rect rect;
@@ -59,5 +64,7 @@ void visual_destroyColorSet(Colors *colors);
 
 void visual_drawSettingsScreen(App* app, Button *buttons);
 void visual_drawVisualizationScreen(App* app, Button *buttons);
+void visual_replay_sorted(App *app, int arr[], int n, void (*draw_func)(App*, int*, int, int, int));
+bool visual_isHovered(SDL_Rect button_r, int x, int y);
 
 #endif

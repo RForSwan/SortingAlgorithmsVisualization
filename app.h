@@ -30,6 +30,9 @@ enum
 typedef int DataType;
 typedef size_t DataSize;
 typedef int SortType;
+static const int selector_sizes[] = {32, 64, 96};
+static int selector_size_idx = 0; // Set default to 128
+// static int selected_nb_elements = 32;
 
 typedef struct AppData_s
 {
@@ -69,6 +72,22 @@ typedef struct App_s
 
     SDL_mutex* rendererUse;
 
+    Mix_Chunk *button_sound;
+    bool button_played;
+
+    int selected_nb_elements;
+
+    int threads_active;
+    bool hold_final_frame;
+
+    double SortA_time;
+    double SortB_time;
+    SDL_mutex *sortTime_mutex;
+    Uint64 SortA_ticks_start;
+    Uint64 SortB_ticks_start;
+    bool   SortA_running;
+    bool   SortB_running;
+
 }App;
 
 enum {
@@ -76,6 +95,7 @@ enum {
     APP_SCREEN_PASS,
     APP_SCREEN_QUIT
 };
+
 
 App* app_init(int LOG_LEVEL);
 void app_play(App* app);

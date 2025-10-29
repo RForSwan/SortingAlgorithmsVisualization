@@ -84,7 +84,7 @@ int inputs_get(App* app, Button *buttons, const unsigned int nb_buttons)
     if(buttons) app->inputs->pass = buttons[0].pressed;
 }
 
-int inputs_clear(App* app)
+void inputs_clear(App* app)
 {
     Inputs* inputs = app->inputs;
     inputs->pass = false;
