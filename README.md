@@ -3,6 +3,15 @@
 ## Description :
 Full tool to compare visually and with statistics the different sorting algorithms
 
+## Technical info : 
+Press `p` to increase speed
+Press `m` to decrease speed
+Press `g` to activate debug Gizmos
+Press `bellanger` to activate AWESOME MODE
+Cycle Menu Buttons to select Array Size
+Cycle Menu Buttons to select Randomness
+Press Readme Button to open README.md file (You should have pressed it if you read this)
+
 gcc : v11.4.0
 Ubuntu : 22.04.2
 
