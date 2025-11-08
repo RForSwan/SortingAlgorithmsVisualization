@@ -16442,3 +16442,41 @@
 [Sat Nov  8 10:43:39 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 59 times]
 [Sat Nov  8 10:43:40 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 59 times]
 [Sat Nov  8 10:43:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Logger initialized successfully with level VERBOSE 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Starting all dependencies  
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : SDL initialized successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : SDL TTF initialized successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Window created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Renderer created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Font loaded successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Inputs gestion created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : App data created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Color set created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Mutex created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Audio device opened successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_init : Sort time mutex created successfully 
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_play : App starting  
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_settingsScreen : Currently on settings screen  
+[Sat Nov  8 10:46:20 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 47 times]
+[Sat Nov  8 10:46:21 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 35 times]
+[Sat Nov  8 10:46:21 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sat Nov  8 10:46:21 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 25 
+[Sat Nov  8 10:46:21 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 11 times]
+[Sat Nov  8 10:46:21 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sat Nov  8 10:46:21 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 50 
+[Sat Nov  8 10:46:21 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 11 times]
+[Sat Nov  8 10:46:22 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 8 times]
+[Sat Nov  8 10:46:22 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sat Nov  8 10:46:22 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 75 
+[Sat Nov  8 10:46:22 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sat Nov  8 10:46:22 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sat Nov  8 10:46:22 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 100 
+[Sat Nov  8 10:46:22 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 19 times]
+[Sat Nov  8 10:46:23 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 12 times]
+[Sat Nov  8 10:46:23 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sat Nov  8 10:46:23 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 0 
+[Sat Nov  8 10:46:23 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 46 times]
+[Sat Nov  8 10:46:24 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 59 times]
+[Sat Nov  8 10:46:25 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 12 times]
+[Sat Nov  8 10:46:25 2025][TYPE :   DEBUG] -> inputs_get : Quitting button pressed 
+[Sat Nov  8 10:46:25 2025][TYPE :    INFO] -> app_quit : App ending  

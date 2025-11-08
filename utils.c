@@ -1,5 +1,7 @@
 #include "settings.h"
 
+static int utils_randomness_percent = 100;
+
 void utils_initializer()
 {
     srand(time(NULL));
@@ -44,6 +46,12 @@ void* utils_copyArray(Logger* logger, const unsigned int nb_elements, const size
     return newArray;
 }
 
+void utils_set_randomness(int percent)
+{
+    if (percent < 0) percent = 0;
+    if (percent > 100) percent = 100;
+    utils_randomness_percent = percent;
+}
 
 void* utils_createArray(Logger* logger, const unsigned int nb_elements, const size_t size, int SortingType, void (*utils_GenAndAssign_Type)(void*, void*, int))
 {
@@ -97,8 +105,56 @@ void* utils_createArray(Logger* logger, const unsigned int nb_elements, const si
 
     return array;
 }
-
 void utils_GenAndAssign_int(void* previous, void* element, int SortingType)
+{
+    int min = 0, max = 100, step = 1, rand_range = 10;
+
+    if (SortingType == SORTED_RANDOM)
+    {
+        // Decide whether to emit a true random value or a near-sorted value
+        int r = rand() % 100;
+        if (r < utils_randomness_percent) {
+            // produce a fully random value inside [min..max]
+            *(int*)element = rand() % (max - min + 1) + min;
+        } else {
+            // produce a near-sorted value:
+            // - if no previous, start near min
+            // - otherwise increment previous by a small amount (with tiny jitter)
+            if (previous == NULL) {
+                *(int*)element = min;
+            } else {
+                int prev = *(int*)previous;
+                // variability decreases as randomness_percent increases
+                int variability = (100 - utils_randomness_percent) * rand_range / 100;
+                if (variability < 0) variability = 0;
+                int add = step + (variability > 0 ? (rand() % (variability + 1)) : 0);
+                *(int*)element = prev + add;
+                if (*(int*)element > max) *(int*)element = max;
+            }
+        }
+    }
+    else if (SortingType == SORTED_INCREASING)
+    {
+        if(previous == NULL) *(int*)element = min;
+        else                 *(int*)element = (*(int*)previous) + step;
+    }
+    else if (SortingType == SORTED_INCREASING_RANDOM)
+    {
+        if(previous == NULL) *(int*)element = min;
+        else                 *(int*)element = (*(int*)previous) + (rand() % rand_range);
+    }
+    else if (SortingType == SORTED_DECREASING)
+    {
+        if(previous == NULL) *(int*)element = max;
+        else                 *(int*)element = (*(int*)previous) - step;
+    }
+    else if (SortingType == SORTED_DECREASING_RANDOM)
+    {
+        if(previous == NULL) *(int*)element = max;
+        else                 *(int*)element = (*(int*)previous) - (rand() % rand_range);
+    }
+}
+/*void utils_GenAndAssign_int(void* previous, void* element, int SortingType)
 {
     int min = 0, max = 100, step = 1, rand_range = 10;
     if (SortingType == SORTED_RANDOM)
@@ -125,7 +181,7 @@ void utils_GenAndAssign_int(void* previous, void* element, int SortingType)
         if(previous == NULL) *(int*)element = max;
         else                 *(int*)element = (*(int*)previous) - (rand() % rand_range);
     }
-}
+}*/
 
 void utils_GenAndAssign_float(void* previous, void* element, int SortingType )
 {
