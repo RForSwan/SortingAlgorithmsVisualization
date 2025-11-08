@@ -1,6 +1,6 @@
 #include "settings.h"
 
-int DELAY_MS = 5;
+int DELAY_MS = 15;
 
 #if 0
 int main(int argc, char *argv[]) {

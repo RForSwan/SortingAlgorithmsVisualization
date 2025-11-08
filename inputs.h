@@ -10,6 +10,8 @@ typedef struct Inputs_s{
 
     bool gizmos;
 
+    bool bellanger;
+
     int mouseX;
     int mouseY;
     bool clicked;

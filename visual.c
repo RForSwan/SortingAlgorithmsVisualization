@@ -1,6 +1,45 @@
 #include "settings.h"
 
 ///// SUB FUNCTIONS /////
+static void interpolate_color(const SDL_Color *c1, const SDL_Color *c2, float t, Uint8 *out_r, Uint8 *out_g, Uint8 *out_b)
+{
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+    *out_r = (Uint8)((1.0f - t) * c1->r + t * c2->r);
+    *out_g = (Uint8)((1.0f - t) * c1->g + t * c2->g);
+    *out_b = (Uint8)((1.0f - t) * c1->b + t * c2->b);
+}
+
+static void color_from_gradient(int idx, int n, const SDL_Color *stops, int stop_count, Uint8 *out_r, Uint8 *out_g, Uint8 *out_b)
+{
+    if (stop_count <= 0) { *out_r = *out_g = *out_b = 255; return; }
+    if (n <= 1 || idx <= 0) {
+        *out_r = stops[0].r; *out_g = stops[0].g; *out_b = stops[0].b;
+        return;
+    }
+    if (idx >= n - 1) {
+        *out_r = stops[stop_count - 1].r; *out_g = stops[stop_count - 1].g; *out_b = stops[stop_count - 1].b;
+        return;
+    }
+
+    float pos = (float)idx / (float)(n - 1);
+    float scaled = pos * (stop_count - 1);
+    int s = (int)floorf(scaled);
+    if (s < 0) s = 0;
+    if (s >= stop_count - 1) s = stop_count - 2;
+    float local_t = scaled - (float)s;
+    interpolate_color(&stops[s], &stops[s + 1], local_t, out_r, out_g, out_b);
+}
+
+// default multi-stop rainbow gradient (adjustable)
+static const SDL_Color default_bar_gradient[] =
+    {
+    {.r = 0,   .g = 0,   .b = 255, .a = 255}, // blue
+    {.r = 0,   .g = 255, .b = 255, .a = 255}, // blue un peu plus blue
+    {.r = 0,   .g = 255, .b = 0,   .a = 255}, // green
+    {.r = 255, .g = 255, .b = 0,   .a = 255}, // yellow
+    {.r = 255, .g = 0,   .b = 0,   .a = 255}  // red
+};
 
 Colors *visual_createColorSet()
 {
@@ -561,10 +600,24 @@ void draw_barsA(App* app, int arr[], int n, int i, int j)
 
     for (int k = 0; k < n; k++) {
         // choose color
-        if (k == i || k == j) {
+        // if (k == i || k == j) {
+        //     SDL_mutexP(app->rendererUse);
+        //     SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // compared bars red
+        //     sound_play_tone_from_value(k, app->selected_nb_elements, 150, 96);
+        //     SDL_mutexV(app->rendererUse);
+        // } else {
+        //     int color_value = (arr[k] * 255) / N;
+        //     if (color_value < 0) color_value = 0;
+        //     if (color_value > 255) color_value = 255;
+        //     SDL_mutexP(app->rendererUse);
+        //     SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
+        //     SDL_mutexV(app->rendererUse);
+        // }
+        if (app->inputs && app->inputs->bellanger) {
+            Uint8 R, G, B;
+            color_from_gradient(k, n, default_bar_gradient, sizeof(default_bar_gradient)/sizeof(default_bar_gradient[0]), &R, &G, &B);
             SDL_mutexP(app->rendererUse);
-            SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // compared bars red
-            sound_play_tone_from_value(k, app->selected_nb_elements, 150, 96);
+            SDL_SetRenderDrawColor(app->renderer, R, G, B, 255);
             SDL_mutexV(app->rendererUse);
         } else {
             int color_value = (arr[k] * 255) / N;
@@ -636,10 +689,24 @@ void draw_barsB(App* app, int arr[], int n, int i, int j)
 
     for (int k = 0; k < n; k++) {
         // choose color
-        if (k == i || k == j) {
+        // if (k == i || k == j) {
+        //     SDL_mutexP(app->rendererUse);
+        //     SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // compared bars red
+        //     sound_play_tone_from_value(k, app->selected_nb_elements, 150, 96);
+        //     SDL_mutexV(app->rendererUse);
+        // } else {
+        //     int color_value = (arr[k] * 255) / N;
+        //     if (color_value < 0) color_value = 0;
+        //     if (color_value > 255) color_value = 255;
+        //     SDL_mutexP(app->rendererUse);
+        //     SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
+        //     SDL_mutexV(app->rendererUse);
+        // }
+        if (app->inputs && app->inputs->bellanger) {
+            Uint8 R, G, B;
+            color_from_gradient(k, n, default_bar_gradient, sizeof(default_bar_gradient)/sizeof(default_bar_gradient[0]), &R, &G, &B);
             SDL_mutexP(app->rendererUse);
-            SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255); // compared bars red
-            sound_play_tone_from_value(k, app->selected_nb_elements, 150, 96);
+            SDL_SetRenderDrawColor(app->renderer, R, G, B, 255);
             SDL_mutexV(app->rendererUse);
         } else {
             int color_value = (arr[k] * 255) / N;
@@ -773,3 +840,35 @@ void draw_barsD(App* app, int arr[], int n, int i, int j) {
 //    SDL_RenderPresent(renderer);
 }
 
+void visual_draw_gizmos_for_buttons(App *app, Button *buttons, int nb_buttons)
+{
+    if (!app || !app->renderer || !app->inputs) return;
+    if (!app->inputs->gizmos) return;
+
+    SDL_mutexP(app->rendererUse);
+
+    // Draw outlines + center markers for each button
+    for (int i = 0; i < nb_buttons; ++i) {
+        SDL_Rect r = buttons[i].rect;
+        // green outline
+        rectangleRGBA(app->renderer, r.x, r.y, r.x + r.w, r.y + r.h, 255, 255, 0, 200);
+
+        // hovered gets a red highlight
+        if (buttons[i].hovered) {
+            rectangleRGBA(app->renderer, r.x - 2, r.y - 2, r.x + r.w + 2, r.y + r.h + 2, 255, 0, 0, 200);
+            filledCircleRGBA(app->renderer, r.x + r.w / 2, r.y + r.h / 2, 4, 255, 0, 0, 220);
+        } else {
+            filledCircleRGBA(app->renderer, r.x + r.w / 2, r.y + r.h / 2, 3, 0, 200, 0, 160);
+        }
+    }
+
+    // Top-left small debug box with mouse coords (simple rectangle + crosshair)
+    int mx = app->inputs->mouseX;
+    int my = app->inputs->mouseY;
+    // mouse crosshair
+    SDL_SetRenderDrawColor(app->renderer, 255, 255, 0, 200);
+    SDL_RenderDrawLine(app->renderer, mx - 8, my, mx + 8, my);
+    SDL_RenderDrawLine(app->renderer, mx, my - 8, mx, my + 8);
+
+    SDL_mutexV(app->rendererUse);
+}

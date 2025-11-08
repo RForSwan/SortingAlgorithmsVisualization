@@ -66,5 +66,6 @@ void visual_drawSettingsScreen(App* app, Button *buttons);
 void visual_drawVisualizationScreen(App* app, Button *buttons);
 void visual_replay_sorted(App *app, int arr[], int n, void (*draw_func)(App*, int*, int, int, int));
 bool visual_isHovered(SDL_Rect button_r, int x, int y);
+void visual_draw_gizmos_for_buttons(App *app, Button *buttons, int nb_buttons);
 
 #endif

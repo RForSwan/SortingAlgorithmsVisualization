@@ -1,173 +1,90 @@
 #include "settings.h"
 
 static void app_drawTopbar(App *app)
-
 {
-
     if (!app) return;
 
-
-
     // Topbar background
-
     SDL_Rect topbar = {.x = 0, .y = 0, .w = WINDOW_WIDTH, .h = TOP_BAR_HEIGHT};
-
     SDL_mutexP(app->rendererUse);
-
     SDL_SetRenderDrawColor(app->renderer, 40, 40, 40, 255);
-
     SDL_RenderFillRect(app->renderer, &topbar);
-
     SDL_mutexV(app->rendererUse);
-
-
 
     // Time string
-
     time_t now = time(NULL);
-
     struct tm *tm_info = localtime(&now);
-
     char time_buf[32];
-
     strftime(time_buf, sizeof(time_buf), "%H:%M:%S", tm_info);
 
-
-
     // Project name
-
     const char *project_name = "SortingAlgorithmsVisualization";
 
-
-
     // Render time (left)
-
     SDL_Color textColor = {255, 255, 255, 255};
-
     SDL_Surface *surf_time = TTF_RenderText_Blended(app->font, time_buf, textColor);
-
     if (surf_time) {
-
         SDL_Texture *tex_time;
-
         SDL_mutexP(app->rendererUse);
-
         tex_time = SDL_CreateTextureFromSurface(app->renderer, surf_time);
-
         SDL_mutexV(app->rendererUse);
-
         if (tex_time) {
-
             int tw, th;
-
             SDL_QueryTexture(tex_time, NULL, NULL, &tw, &th);
-
             SDL_Rect dest_time = {.x = 10, .y = (TOP_BAR_HEIGHT - th) / 2, .w = tw, .h = th};
-
             SDL_mutexP(app->rendererUse);
-
             SDL_RenderCopy(app->renderer, tex_time, NULL, &dest_time);
-
             SDL_mutexV(app->rendererUse);
-
             SDL_DestroyTexture(tex_time);
-
         }
-
         SDL_FreeSurface(surf_time);
-
     }
-
-
 
     // Render project name (center)
-
     SDL_Surface *surf_proj = TTF_RenderText_Blended(app->font, project_name, textColor);
-
     if (surf_proj) {
-
         SDL_Texture *tex_proj;
-
         SDL_mutexP(app->rendererUse);
-
         tex_proj = SDL_CreateTextureFromSurface(app->renderer, surf_proj);
-
         SDL_mutexV(app->rendererUse);
-
         if (tex_proj) {
-
             int tw, th;
-
             SDL_QueryTexture(tex_proj, NULL, NULL, &tw, &th);
-
             SDL_Rect dest_proj = {.x = (WINDOW_WIDTH - tw) / 2, .y = (TOP_BAR_HEIGHT - th) / 2, .w = tw, .h = th};
-
             SDL_mutexP(app->rendererUse);
-
             SDL_RenderCopy(app->renderer, tex_proj, NULL, &dest_proj);
-
             SDL_mutexV(app->rendererUse);
-
             SDL_DestroyTexture(tex_proj);
-
         }
-
         SDL_FreeSurface(surf_proj);
-
     }
 
-
-
     // README small button (right)
-
     SDL_Rect readme_rect = {.x = WINDOW_WIDTH - 110, .y = 10, .w = 100, .h = TOP_BAR_HEIGHT - 20};
-
     SDL_mutexP(app->rendererUse);
-
     SDL_SetRenderDrawColor(app->renderer, 70, 70, 70, 255);
-
     SDL_RenderFillRect(app->renderer, &readme_rect);
-
     rectangleRGBA(app->renderer, readme_rect.x, readme_rect.y, readme_rect.x + readme_rect.w, readme_rect.y + readme_rect.h, 255, 255, 255, 255);
-
     SDL_mutexV(app->rendererUse);
 
-
-
     SDL_Surface *surf_readme = TTF_RenderText_Blended(app->font, "README", textColor);
-
     if (surf_readme) {
-
         SDL_Texture *tex_readme;
-
         SDL_mutexP(app->rendererUse);
-
         tex_readme = SDL_CreateTextureFromSurface(app->renderer, surf_readme);
 
         SDL_mutexV(app->rendererUse);
-
         if (tex_readme) {
-
             int tw, th;
-
             SDL_QueryTexture(tex_readme, NULL, NULL, &tw, &th);
-
             SDL_Rect dest_readme = {.x = readme_rect.x + (readme_rect.w - tw) / 2, .y = readme_rect.y + (readme_rect.h - th) / 2, .w = tw, .h = th};
-
             SDL_mutexP(app->rendererUse);
-
             SDL_RenderCopy(app->renderer, tex_readme, NULL, &dest_readme);
-
             SDL_mutexV(app->rendererUse);
-
             SDL_DestroyTexture(tex_readme);
-
         }
-
         SDL_FreeSurface(surf_readme);
-
     }
-
 }
 
 App* app_init(int LOG_LEVEL){
@@ -385,8 +302,8 @@ int app_settingsScreen(App *app)
     //         };
 
     static const char *selector_options[3] = {"Option 1", "Option 2", "Option 3"};
-    static int selector_idx[3] = {0,0,0}; // for the others buttons
-    static char label_buffers[4][64]; // 0 = size & 1..3 = others
+    static int selector_idx[1] = {0}; // for the others buttons
+    static char label_buffers[6][64]; // 0 = size & 1..3 = others
 
 
     while(true)
@@ -394,10 +311,11 @@ int app_settingsScreen(App *app)
         inputs_clear(app);
         SDL_RenderClear(app->renderer);
 
-        snprintf(label_buffers[0], sizeof(label_buffers[0]), "Size: %d", selector_sizes[selector_size_idx]);
         for (int s = 0; s < 3; ++s) {
             snprintf(label_buffers[s+1], sizeof(label_buffers[s+1]), "< %s >", selector_options[selector_idx[s] % 3 ]);
         }
+        snprintf(label_buffers[0], sizeof(label_buffers[0]), "Size: %d", selector_sizes[selector_size_idx]);
+        snprintf(label_buffers[2], sizeof(label_buffers[2]), "Rand : %d", selector_rand[selector_rand_idx]);
 
         // Update selector labels
         // for (int s = 0; s < 4; ++s) {
@@ -452,8 +370,22 @@ int app_settingsScreen(App *app)
             app->selected_nb_elements = selector_sizes[selector_size_idx];
             logger_log(app->logger, LOG_LEVEL_INFO, "app_settingsScreen : Selected size changed to %d", app->selected_nb_elements);
         }
-        // Process other selector buttons (indexes 1..3)
-        for(int i = 2; i < NB_BUTTONS_SETTINGS; i++)
+        // Process other selector buttons
+        if (buttons[2].pressed)
+        {
+            if (app->button_sound) sound_play_effect(app->button_sound, 0);
+            selector_type_idx = (selector_type_idx + 1) % (sizeof(selector_types) / sizeof(selector_types[0]));
+            app->selected_data_type = selector_types[selector_type_idx];
+            logger_log(app->logger, LOG_LEVEL_INFO, "app_settingsScreen : Selected data type changed to %d", app->selected_data_type);
+        }
+        if (buttons[3].pressed)
+        {
+            if (app->button_sound) sound_play_effect(app->button_sound, 0);
+            selector_rand_idx = (selector_rand_idx + 1) % (sizeof(selector_rand) / sizeof(selector_rand[0]));
+            app->selected_randomness = selector_rand[selector_rand_idx];
+            logger_log(app->logger, LOG_LEVEL_INFO, "app_settingsScreen : Selected randomness changed to %d", app->selected_randomness);
+        }
+        for(int i = 4; i < NB_BUTTONS_SETTINGS; i++)
         {
             if(buttons[i].pressed)
             {
@@ -468,6 +400,9 @@ int app_settingsScreen(App *app)
         if(buttons[0].pressed) return APP_SCREEN_PASS;
 
         visual_drawSettingsScreen(app, buttons);
+        if (app->inputs && app->inputs->gizmos) {
+            visual_draw_gizmos_for_buttons(app, buttons, NB_BUTTONS_SETTINGS);
+        }
         app_drawTopbar(app);
 
         SDL_Delay(DELAY_MS);
@@ -531,7 +466,6 @@ int app_visualizationScreen(App *app)
         SDL_Delay(DELAY_MS);
 
         SDL_RenderPresent(app->renderer);
-
     }
 
     app->threadsRun = false;

@@ -1,5 +1,7 @@
 #include "settings.h"
 
+static int bellanger_state = 0;
+
 Inputs *inputs_create()
 {
     Inputs *inputs = calloc(1, sizeof(Inputs));
@@ -22,6 +24,9 @@ void inputs_destroy(Inputs *inputs)
 
 int inputs_get(App* app, Button *buttons, const unsigned int nb_buttons)
 {
+
+
+
     logger_log(app->logger, LOG_LEVEL_INFO, "app_inputs : Reviewing all inputs ");
 
     Inputs* inputs = app->inputs;
@@ -68,6 +73,49 @@ int inputs_get(App* app, Button *buttons, const unsigned int nb_buttons)
                 logger_log(app->logger, LOG_LEVEL_INFO, "inputs_get : Decrease waiting delay while sorting");
                 DELAY_MS -= 2;
                 logger_log(app->logger, LOG_LEVEL_DEBUG, "inputs_get : Delay now set to [%2dms]", DELAY_MS);
+            }
+            if(event.key.keysym.sym == SDLK_b)
+            {
+                bellanger_state = 1;
+            }
+            else if(event.key.keysym.sym == SDLK_e && bellanger_state == 1)
+            {
+                bellanger_state = 2;
+            }
+            else if(event.key.keysym.sym == SDLK_l && bellanger_state == 2)
+            {
+                bellanger_state = 3;
+            }
+            else if(event.key.keysym.sym == SDLK_l && bellanger_state == 3)
+            {
+                bellanger_state = 4;
+            }
+            else if(event.key.keysym.sym == SDLK_a && bellanger_state == 4)
+            {
+                bellanger_state = 5;
+            }
+            else if(event.key.keysym.sym == SDLK_n && bellanger_state == 5)
+            {
+                bellanger_state = 6;
+            }
+            else if(event.key.keysym.sym == SDLK_g && bellanger_state == 6)
+            {
+                bellanger_state = 7;
+            }
+            else if(event.key.keysym.sym == SDLK_e && bellanger_state == 7)
+            {
+                bellanger_state = 8;
+            }
+            else if(event.key.keysym.sym == SDLK_r && bellanger_state == 8)
+            {
+                inputs->bellanger = true;
+                logger_log(app->logger, LOG_LEVEL_INFO, "inputs_get : Bellanger easter-egg triggered");
+                bellanger_state = 0;
+            }
+            else
+            {
+                if(event.key.keysym.sym == SDLK_b) bellanger_state = 1;
+                else bellanger_state = 0;
             }
         }
     }
