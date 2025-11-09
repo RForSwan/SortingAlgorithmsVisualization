@@ -16480,3 +16480,266 @@
 [Sat Nov  8 10:46:25 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 12 times]
 [Sat Nov  8 10:46:25 2025][TYPE :   DEBUG] -> inputs_get : Quitting button pressed 
 [Sat Nov  8 10:46:25 2025][TYPE :    INFO] -> app_quit : App ending  
+[Sun Nov  9 15:36:22 2025][TYPE :    INFO] -> app_init : Logger initialized successfully with level VERBOSE 
+[Sun Nov  9 15:36:22 2025][TYPE :    INFO] -> app_init : Starting all dependencies  
+[Sun Nov  9 15:36:23 2025][TYPE :    INFO] -> app_init : SDL initialized successfully 
+[Sun Nov  9 15:36:23 2025][TYPE :    INFO] -> app_init : SDL TTF initialized successfully 
+[Sun Nov  9 15:36:23 2025][TYPE :    INFO] -> app_init : Window created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Renderer created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Font loaded successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Inputs gestion created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : App data created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Color set created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Mutex created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Audio device opened successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_init : Sort time mutex created successfully 
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_play : App starting  
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_settingsScreen : Currently on settings screen  
+[Sun Nov  9 15:36:24 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:25 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 10 times]
+[Sun Nov  9 15:36:26 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 17 times]
+[Sun Nov  9 15:36:27 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:37:03 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:26 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:36:27 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 19 times]
+[Sun Nov  9 15:36:28 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 18 times]
+[Sun Nov  9 15:36:29 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 16 times]
+[Sun Nov  9 15:36:29 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:29 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 64 
+[Sun Nov  9 15:36:29 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:36:30 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 12 times]
+[Sun Nov  9 15:36:30 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:30 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 96 
+[Sun Nov  9 15:36:30 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:36:31 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:31 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:31 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 32 
+[Sun Nov  9 15:36:31 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 14 times]
+[Sun Nov  9 15:36:31 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:31 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 64 
+[Sun Nov  9 15:36:31 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:36:32 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:36:31 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:36:32 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:36:32 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:32 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 96 
+[Sun Nov  9 15:36:32 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 11 times]
+[Sun Nov  9 15:36:32 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:32 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 32 
+[Sun Nov  9 15:36:32 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:36:33 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 18 times]
+[Sun Nov  9 15:36:34 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 19 times]
+[Sun Nov  9 15:36:35 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:36:35 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:35 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 1 
+[Sun Nov  9 15:36:35 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 9 times]
+[Sun Nov  9 15:36:35 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:35 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 2 
+[Sun Nov  9 15:36:35 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:36:36 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 3 
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 13 times]
+[Sun Nov  9 15:36:36 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 0 
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:36:37 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:36:36 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:36:37 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 7 times]
+[Sun Nov  9 15:36:37 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:37 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 1 
+[Sun Nov  9 15:36:37 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 11 times]
+[Sun Nov  9 15:36:38 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 7 times]
+[Sun Nov  9 15:36:38 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:38 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 2 
+[Sun Nov  9 15:36:38 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:36:38 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:38 2025][TYPE :    INFO] -> app_settingsScreen : Selected data type changed to 3 
+[Sun Nov  9 15:36:38 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:36:39 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 16 times]
+[Sun Nov  9 15:36:39 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:39 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 25 
+[Sun Nov  9 15:36:39 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:40 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 10 times]
+[Sun Nov  9 15:36:40 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:40 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 50 
+[Sun Nov  9 15:36:40 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 9 times]
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:41 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 75 
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 11 times]
+[Sun Nov  9 15:36:41 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 100 
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 7 times]
+[Sun Nov  9 15:36:42 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:36:41 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 0 
+[Sun Nov  9 15:36:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:36:42 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 9 times]
+[Sun Nov  9 15:36:42 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:42 2025][TYPE :    INFO] -> app_settingsScreen : Selected randomness changed to 25 
+[Sun Nov  9 15:36:42 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 8 times]
+[Sun Nov  9 15:36:43 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 11 times]
+[Sun Nov  9 15:36:43 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:43 2025][TYPE :    INFO] -> app_settingsScreen : Selector 3 changed to Option 2 
+[Sun Nov  9 15:36:43 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:36:44 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:44 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:44 2025][TYPE :    INFO] -> app_settingsScreen : Selector 3 changed to Option 3 
+[Sun Nov  9 15:36:44 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 10 times]
+[Sun Nov  9 15:36:44 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:44 2025][TYPE :    INFO] -> app_settingsScreen : Selector 3 changed to Option 1 
+[Sun Nov  9 15:36:44 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:36:45 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:36:45 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:45 2025][TYPE :    INFO] -> app_settingsScreen : Selector 3 changed to Option 2 
+[Sun Nov  9 15:36:45 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 13 times]
+[Sun Nov  9 15:36:45 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:45 2025][TYPE :    INFO] -> app_settingsScreen : Selector 3 changed to Option 3 
+[Sun Nov  9 15:36:45 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:36:46 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> app_settingsScreen : Selector 3 changed to Option 1 
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 15 times]
+[Sun Nov  9 15:36:47 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:37:23 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:36:46 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> app_visualizationScreen : App starting  
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> utils_copyArray : copying array at 0x6353aeee9370 
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> thread_func : Thread nb 0 is launched 
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> thread_func : Thread nb 1 is launched 
+[Sun Nov  9 15:36:46 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:47 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 29 times]
+[Sun Nov  9 15:36:48 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:36:49 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 30 times]
+[Sun Nov  9 15:36:50 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:36:51 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 29 times]
+[Sun Nov  9 15:36:52 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:36:51 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 7 times]
+[Sun Nov  9 15:36:52 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:36:53 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:36:54 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:36:55 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:36:56 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:36:57 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:37:33 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:36:56 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 7 times]
+[Sun Nov  9 15:36:57 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 9 times]
+[Sun Nov  9 15:36:57 2025][TYPE :   DEBUG] -> inputs_get : Key pressed [g] 
+[Sun Nov  9 15:36:57 2025][TYPE :    INFO] -> inputs_get : Switch gizmo on and off 
+[Sun Nov  9 15:36:57 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 22 times]
+[Sun Nov  9 15:36:58 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 9 times]
+[Sun Nov  9 15:36:58 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:36:58 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 13 times]
+[Sun Nov  9 15:36:58 2025][TYPE :   DEBUG] -> inputs_get : Key pressed [g] 
+[Sun Nov  9 15:36:58 2025][TYPE :    INFO] -> inputs_get : Switch gizmo on and off 
+[Sun Nov  9 15:36:58 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 8 times]
+[Sun Nov  9 15:36:59 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:37:00 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 14 times]
+[Sun Nov  9 15:37:00 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:00 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 17 times]
+[Sun Nov  9 15:37:01 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:02 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:37:38 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:37:01 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:37:02 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 34 times]
+[Sun Nov  9 15:37:03 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:37:04 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:05 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:37:06 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:37:06 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:06 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 27 times]
+[Sun Nov  9 15:37:06 2025][TYPE :   DEBUG] -> inputs_get : Key pressed [] 
+[Sun Nov  9 15:37:06 2025][TYPE :    INFO] -> inputs_get : Initialise quitting sequence 
+[Sun Nov  9 15:37:07 2025][TYPE :    INFO] -> utils_destroyArray : Array freed successfully [occurred 1 times]
+[Sun Nov  9 15:37:07 2025][TYPE :    INFO] -> app_quit : App ending  
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Logger initialized successfully with level VERBOSE 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Starting all dependencies  
+[Sun Nov  9 15:37:12 2025][TYPE :    INFO] -> app_init : SDL initialized successfully 
+[Sun Nov  9 15:37:12 2025][TYPE :    INFO] -> app_init : SDL TTF initialized successfully 
+[Sun Nov  9 15:37:12 2025][TYPE :    INFO] -> app_init : Window created successfully 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Renderer created successfully 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Font loaded successfully 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Inputs gestion created successfully 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : App data created successfully 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Color set created successfully 
+[Sun Nov  9 15:37:11 2025][TYPE :    INFO] -> app_init : Mutex created successfully 
+[Sun Nov  9 15:37:13 2025][TYPE :    INFO] -> app_init : Audio device opened successfully 
+[Sun Nov  9 15:37:13 2025][TYPE :    INFO] -> app_init : Sort time mutex created successfully 
+[Sun Nov  9 15:37:13 2025][TYPE :    INFO] -> app_play : App starting  
+[Sun Nov  9 15:37:13 2025][TYPE :    INFO] -> app_settingsScreen : Currently on settings screen  
+[Sun Nov  9 15:37:13 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:37:13 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:13 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:37:14 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 17 times]
+[Sun Nov  9 15:37:15 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:37:15 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:15 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 64 
+[Sun Nov  9 15:37:15 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 9 times]
+[Sun Nov  9 15:37:15 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:15 2025][TYPE :    INFO] -> app_settingsScreen : Selected size changed to 96 
+[Sun Nov  9 15:37:15 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:37:16 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 18 times]
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:37:17 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> app_visualizationScreen : App starting  
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> utils_copyArray : copying array at 0x6343c6827170 
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> thread_func : Thread nb 0 is launched 
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> thread_func : Thread nb 1 is launched 
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 1 times]
+[Sun Nov  9 15:37:16 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:37:17 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:18 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:19 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:20 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:21 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:22 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:37:58 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:37:21 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:37:22 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:23 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:24 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:25 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 10 times]
+[Sun Nov  9 15:37:25 2025][TYPE :   DEBUG] -> inputs_get : Mouse button clicked 
+[Sun Nov  9 15:37:25 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 20 times]
+[Sun Nov  9 15:37:26 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 29 times]
+[Sun Nov  9 15:37:27 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:37:26 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:37:27 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 30 times]
+[Sun Nov  9 15:37:28 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:29 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:37:30 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 30 times]
+[Sun Nov  9 15:37:31 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 29 times]
+[Sun Nov  9 15:37:32 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 3 times]
+[Sun Nov  9 15:37:31 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:37:32 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:33 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 30 times]
+[Sun Nov  9 15:37:34 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:35 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:37 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:38:13 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:37:36 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:37:37 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 30 times]
+[Sun Nov  9 15:37:38 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 29 times]
+[Sun Nov  9 15:37:39 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:40 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 33 times]
+[Sun Nov  9 15:37:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:42 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 4 times]
+[Sun Nov  9 15:38:18 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  
+[Sun Nov  9 15:37:41 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 6 times]
+[Sun Nov  9 15:37:42 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:43 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:44 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 32 times]
+[Sun Nov  9 15:37:45 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:46 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 31 times]
+[Sun Nov  9 15:37:47 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 8 times]
+[Sun Nov  9 15:37:46 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 5 times]
+[Sun Nov  9 15:37:47 2025][TYPE :    INFO] -> app_inputs : Reviewing all inputs  [occurred 2 times]
+[Sun Nov  9 15:37:47 2025][TYPE :   DEBUG] -> inputs_get : Quitting button pressed 
+[Sun Nov  9 15:37:47 2025][TYPE :    INFO] -> utils_destroyArray : Array freed successfully [occurred 1 times]
+[Sun Nov  9 15:37:47 2025][TYPE :    INFO] -> app_quit : App ending  
