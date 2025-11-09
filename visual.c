@@ -599,6 +599,14 @@ void draw_barsA(App* app, int arr[], int n, int i, int j)
     int bar_w = slot_w > 1 ? slot_w - 1 : 1;
 
     for (int k = 0; k < n; k++) {
+
+        int max_value = app->selected_nb_elements;
+        int value = arr[k];
+        int tone_idx = (value * app->selected_nb_elements) / (max_value > 0 ? max_value : 1);
+        if (tone_idx < 0) tone_idx = 0;
+        if (tone_idx >= app->selected_nb_elements) tone_idx = app->selected_nb_elements - 1;
+
+
         // choose color
         // if (k == i || k == j) {
         //     SDL_mutexP(app->rendererUse);
@@ -618,6 +626,7 @@ void draw_barsA(App* app, int arr[], int n, int i, int j)
             color_from_gradient(k, n, default_bar_gradient, sizeof(default_bar_gradient)/sizeof(default_bar_gradient[0]), &R, &G, &B);
             SDL_mutexP(app->rendererUse);
             SDL_SetRenderDrawColor(app->renderer, R, G, B, 255);
+            sound_play_tone_from_value(tone_idx, app->selected_nb_elements, 30, 96);
             SDL_mutexV(app->rendererUse);
         } else {
             int color_value = (arr[k] * 255) / N;
@@ -625,6 +634,7 @@ void draw_barsA(App* app, int arr[], int n, int i, int j)
             if (color_value > 255) color_value = 255;
             SDL_mutexP(app->rendererUse);
             SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
+            sound_play_tone_from_value(tone_idx, app->selected_nb_elements, 30, 96);
             SDL_mutexV(app->rendererUse);
         }
 
@@ -702,11 +712,20 @@ void draw_barsB(App* app, int arr[], int n, int i, int j)
         //     SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
         //     SDL_mutexV(app->rendererUse);
         // }
+        int max_value = app->selected_nb_elements;
+        int value = arr[k];
+        int tone_idx = (value * app->selected_nb_elements) / (max_value > 0 ? max_value : 1);
+        if (tone_idx < 0) tone_idx = 0;
+        if (tone_idx >= app->selected_nb_elements) tone_idx = app->selected_nb_elements - 1;
+
+
         if (app->inputs && app->inputs->bellanger) {
             Uint8 R, G, B;
             color_from_gradient(k, n, default_bar_gradient, sizeof(default_bar_gradient)/sizeof(default_bar_gradient[0]), &R, &G, &B);
             SDL_mutexP(app->rendererUse);
             SDL_SetRenderDrawColor(app->renderer, R, G, B, 255);
+            sound_play_tone_from_value(tone_idx, app->selected_nb_elements, 30, 96);
+
             SDL_mutexV(app->rendererUse);
         } else {
             int color_value = (arr[k] * 255) / N;
@@ -714,6 +733,7 @@ void draw_barsB(App* app, int arr[], int n, int i, int j)
             if (color_value > 255) color_value = 255;
             SDL_mutexP(app->rendererUse);
             SDL_SetRenderDrawColor(app->renderer, color_value, color_value, color_value, 255);
+            sound_play_tone_from_value(tone_idx, app->selected_nb_elements, 30, 96);
             SDL_mutexV(app->rendererUse);
         }
 
