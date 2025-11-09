@@ -50,14 +50,17 @@ int inputs_get(App* app, Button *buttons, const unsigned int nb_buttons)
             logger_log(app->logger, LOG_LEVEL_DEBUG, "inputs_get : Key pressed [%c]", event.key.keysym.sym);
             if(event.key.keysym.sym == SDLK_ESCAPE)
             {
-                logger_log(app->logger, LOG_LEVEL_INFO, "inputs_get : Initialise quitting sequence");
-                inputs->quit = true;
+                // logger_log(app->logger, LOG_LEVEL_INFO, "inputs_get : Initialise quitting sequence");
+                // inputs->quit = true;
+                logger_log(app->logger, LOG_LEVEL_INFO, "inputs_get : Initialise back to settings sequence");
+                inputs->basktosettings = true;
+
             }
             if(event.key.keysym.sym == SDLK_RETURN)
             {
                 inputs->clicked = true;
             }
-            if(event.key.keysym.sym == SDLK_g)
+            if(event.key.keysym.sym == SDLK_d)
             {
                 logger_log(app->logger, LOG_LEVEL_INFO, "inputs_get : Switch gizmo on and off");
                 inputs->gizmos = !inputs->gizmos;

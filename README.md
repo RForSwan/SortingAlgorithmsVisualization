@@ -6,7 +6,8 @@ Full tool to compare visually and with statistics the different sorting algorith
 ## Technical info : 
 Press `p` to increase speed
 Press `m` to decrease speed
-Press `g` to activate debug Gizmos
+Press `d` to activate debug Gizmos
+Press `ESC` to return to main page
 Press `bellanger` to activate AWESOME MODE
 Cycle Menu Buttons to select Array Size
 Cycle Menu Buttons to select Randomness

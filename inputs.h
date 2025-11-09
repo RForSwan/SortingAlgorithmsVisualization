@@ -15,6 +15,7 @@ typedef struct Inputs_s{
     int mouseX;
     int mouseY;
     bool clicked;
+    bool basktosettings;
 }Inputs;
 
 Inputs *inputs_create();

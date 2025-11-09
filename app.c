@@ -208,7 +208,7 @@ App* app_init(int LOG_LEVEL){
     App* app = calloc(1,sizeof(App));
     AssertNew(app);
 
-    utils_set_radomness(app->selected_randomness);
+    utils_set_randomness(app->selected_randomness);
     app->window   = window;
     app->renderer = renderer;
     app->font     = font;
@@ -384,7 +384,7 @@ int app_settingsScreen(App *app)
             if (app->button_sound) sound_play_effect(app->button_sound, 0);
             selector_rand_idx = (selector_rand_idx + 1) % (sizeof(selector_rand) / sizeof(selector_rand[0]));
             app->selected_randomness = selector_rand[selector_rand_idx];
-            utils_set_radomness(app->selected_randomness);
+            utils_set_randomness(app->selected_randomness);
             logger_log(app->logger, LOG_LEVEL_INFO, "app_settingsScreen : Selected randomness changed to %d", app->selected_randomness);
         }
         for(int i = 4; i < NB_BUTTONS_SETTINGS; i++)
@@ -417,6 +417,7 @@ int app_visualizationScreen(App *app)
 {
     logger_log(app->logger, LOG_LEVEL_INFO, "app_visualizationScreen : App starting ");
 
+    app->threadsRun = true;
 
     // void* array1 = utils_createArray(app->logger, selected_nb_elements, sizeof(int), SORTED_RANDOM, utils_GenAndAssign_int);
     // ThreadData data1 = {.ID = 0, .app = app, .nb_elements = selected_nb_elements, .array = array1,
@@ -427,7 +428,7 @@ int app_visualizationScreen(App *app)
     // ThreadData data2 = {.ID = 1, .app = app, .nb_elements = selected_nb_elements, .array = array2,
     //         .data_size = sizeof(int), .compare_func = compare_int,
     //         .sorting_algorithm = test_sort2};
-    utils_set_radomness(app->selected_randomness);
+    utils_set_randomness(app->selected_randomness);
 
     void* array1 = utils_createArray(app->logger, app->selected_nb_elements, sizeof(int), SORTED_RANDOM, utils_GenAndAssign_int);
     ThreadData *data1 = calloc(1, sizeof(ThreadData));
@@ -465,6 +466,11 @@ int app_visualizationScreen(App *app)
 
         inputs_get(app, NULL, 0);
 
+        if (app->inputs->basktosettings) {
+            logger_log(app->logger, LOG_LEVEL_INFO, "app_visualizationScreen : Back-to-settings requested, stopping sorts");
+            break;
+        }
+
         visual_drawVisualizationScreen(app, NULL);
         SDL_Delay(DELAY_MS);
 
@@ -482,6 +488,8 @@ int app_visualizationScreen(App *app)
     utils_destroyArray(app->logger, app->selected_nb_elements, int_size, array2, NULL);
     free(data1);
     free(data2);
+
+    if (app->inputs) app->inputs->basktosettings = false;
 
     if(app->inputs->quit) return APP_SCREEN_QUIT;
     else                  return APP_SCREEN_PASS;

@@ -42,6 +42,7 @@
 #define BAR_WIDTH  10
 extern int DELAY_MS;
 
+
 // Play Button
 #define BUTTON_WIDTH 200
 #define OPTION_BUTTON_WIDTH 300
